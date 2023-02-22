@@ -128,11 +128,10 @@ class Patient
 
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
-    public static function getProfilPatient(): array
+    public static function get($id): object
     {
         $db = dbConnect();
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        $sql = "SELECT * FROM `patients`  WHERE `id` = $id";
+        $sql = "SELECT * FROM `patients`  WHERE `id`=:id";
         $sth = $db->prepare($sql);
         // On attache les valeurs
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
