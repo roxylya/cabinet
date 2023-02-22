@@ -72,7 +72,8 @@ input {
 
 input[type="submit"] {
     background-color: #f99e49;
-    width: 30%;
+    font-size: 1.5rem;
+    width: 12rem;
 }
 
 input[type="submit"]:hover {
@@ -115,41 +116,6 @@ td {
 .tools {
     width: 2rem;
 }
-
-
-
-
-/* profil Patient */
-
-.formProfil {
-    position: relative;
-    border-radius: 1rem;
-    border: thick double #f99e49;
-    background-color: #b4d5e072;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.pen {
-    width: 3rem;
-    background-color: darkslategray;
-    color: #f99e49;
-    z-index: 1;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-}
-
-/* .pen:focus {
-    transform: translateY(3px);
-    transform: scale(1);
-} */
 
 .avertissement {
     display: none;
@@ -225,9 +191,38 @@ td {
     }
 }
 
-.profilPatient {
-    height: 80.7vh;
+
+
+/* profil Patient */
+
+.formProfil {
+    border-radius: 1rem;
+    border: thick double #f99e49;
+    background-color: #b4d5e072;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
 }
+
+.pen{
+    width: 1.8rem;
+}
+
+.btnPen {  
+    background-color: darkslategray;
+    width: 12rem;    
+    border-radius: 1rem;
+    border: outset 2px black;
+    
+}
+
+.btnPen:hover {
+    transform: translateY(3px);
+}
+
 
 .propriety {
     font-weight: bolder;
