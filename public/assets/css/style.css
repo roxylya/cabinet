@@ -1,0 +1,241 @@
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Julee', cursive;
+
+}
+
+/* header */
+
+header {
+    background-color: darkslategray;
+}
+
+.nav-link {
+    color: #f99e49;
+    text-shadow: 0.1em 0.1em 0.2em #000000;
+    text-decoration: none;
+    font-size: 1.4rem;
+}
+
+.logo {
+    width: 5rem;
+}
+
+/* main */
+
+main {}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.7rem;
+}
+
+.exos {
+    border-style: double;
+    background-color: #b4d5e072;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+    height: 10rem;
+}
+
+p {
+    text-align: justify;
+}
+
+
+
+/* ajout-patient form */
+
+label {
+    display: block;
+    width: 15rem;
+    float: left;
+}
+
+
+input {
+    width: 20rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.form {
+    border-radius: 1rem;
+    border: thick double #f99e49;
+    background-color: #b4d5e072;
+}
+
+
+input[type="submit"] {
+    background-color: #f99e49;
+    width: 30%;
+}
+
+input[type="submit"]:hover {
+    transform: translateY(3px);
+}
+
+.messageOk {
+    color: rgb(11, 54, 11);
+}
+
+
+.error {
+    color: rgb(153, 9, 9);
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+
+/* tableau d'affichage : */
+
+.titleCol {
+    background-color: #f99e49;
+}
+
+th {
+    padding: 1rem;
+    width: 14rem;
+    border: solid black;
+    text-align: center;
+}
+
+td {
+    padding: 1rem;
+    width: 14rem;
+    border: solid black;
+    text-align: center;
+    background-color: #ddecf1;
+}
+
+.tools {
+    width: 2rem;
+}
+
+
+
+
+/* profil Patient */
+
+.formProfil {
+    position: relative;
+    border-radius: 1rem;
+    border: thick double #f99e49;
+    background-color: #b4d5e072;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.pen {
+    width: 3rem;
+    background-color: darkslategray;
+    color: #f99e49;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+/* .pen:focus {
+    transform: translateY(3px);
+    transform: scale(1);
+} */
+
+.avertissement {
+    display: none;
+}
+
+@media only screen and (orientation:portrait) {
+    table {
+        display: none;
+    }
+
+    .avertissement {
+        display: block;
+        height: 55.6vh;
+    }
+}
+
+@media only screen and (orientation:landscape) {
+    .avertissement {
+        display: none;
+    }
+}
+
+@media (max-width : 600px) {
+    .formProfil {
+        border-radius: 1rem;
+        border: thick double #f99e49;
+        background-color: #b4d5e072;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .pen {
+        background-color: rgba(47, 79, 79, 0.164);
+    }
+    .form {
+        width: 90%;
+    }
+
+    table {
+        width: 98%;
+    }
+
+    .titleCol {
+        background-color: #f99e49;
+    }
+
+    th {
+        padding: 0.5rem;
+        width: 4rem;
+        border: solid black;
+        text-align: center;
+    }
+
+    td {
+        padding: 0.5rem;
+        width: 4rem;
+        border: solid black;
+        text-align: center;
+        background-color: #ddecf1;
+    }
+
+    label {
+        text-align: center;
+        padding-bottom: 0.5rem;
+    }
+
+    input {
+        width: 15rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+}
+
+.profilPatient {
+    height: 80.7vh;
+}
+
+.propriety {
+    font-weight: bolder;
+}
+
+/* footer */
+footer {
+    background-color: darkslategray;
+    color: #f99e49;
+    text-shadow: 0.1em 0.1em 0.2em #000000;
+}
