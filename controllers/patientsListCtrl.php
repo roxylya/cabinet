@@ -10,10 +10,13 @@ try {
     $errorMessage = $th->getMessage();
     include(__DIR__ . '/../views/templates/header.php');
     include(__DIR__ . '/../views/error.php');
+    include(__DIR__ . '/../views/templates/footer.php');
     die;
 }
 
 
-include(__DIR__ . '/../views/templates/header.php');
-include(__DIR__ . '/../views/patient/patientsList.php');
-include(__DIR__ . '/../views/templates/footer.php');
+
+    include(__DIR__ . '/../views/templates/header.php');
+    include(__DIR__ . '/../views/patient/patientsList.php');
+    include(__DIR__ . '/../views/templates/footer.php');
+

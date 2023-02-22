@@ -28,7 +28,7 @@
                         <a class="nav-link pe-lg-5" href="/controllers/patientsListCtrl.php">Patientèle</a>
                         <a class="nav-link pe-lg-5" href="/controllers/addRdvCtrl.php">Ajouter un rendez-vous</a>
                         <a class="nav-link pe-lg-5" href="/controllers/rdvListCtrl.php">Agenda</a>
-                        <a class="nav-link pe-lg-5" href="/controllers/addPatientAddListCtrl.php">Nouveau patient/rdv</a>
+                        <a class="nav-link pe-lg-5" href="/controllers/addPatientAddRdvCtrl.php">Nouveau patient/rdv</a>
                     </div>
                 </div>
             </div>

@@ -110,7 +110,7 @@ class Patient
         $db = dbConnect();
         $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
         $sth = $db->query($sql);
-        $results = $sth->fetchAll(PDO::FETCH_OBJ);
+        $results = $sth->fetchAll();
         return $results;
     }
 
@@ -121,7 +121,7 @@ class Patient
         $sql = 'SELECT `id` FROM `patients` WHERE `mail` = ?;';
         $sth = $db->prepare($sql);
         $sth->execute([$mail]);
-        $results = $sth->fetchAll(PDO::FETCH_OBJ);
+        $results = $sth->fetchAll();
 
         return (empty($results)) ? false : true;
     }
@@ -137,7 +137,7 @@ class Patient
         // On attache les valeurs
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
-        $results = $sth->fetch(PDO::FETCH_OBJ);
+        $results = $sth->fetch();
         return $results;
     }
 
