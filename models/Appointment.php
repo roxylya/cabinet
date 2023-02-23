@@ -12,9 +12,9 @@ class Appointment
     private int $idPatients;
 
 
-    public function __construct(int $id, string $dateHour, int $idPatients)
+    public function __construct(string $dateHour, int $idPatients)
     {
-        $this->id = $id;
+      
         $this->dateHour = $dateHour;
         $this->idPatients = $idPatients;
     }
@@ -58,9 +58,10 @@ class Appointment
         //On insère les données reçues   
         // on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
         $sth = $db->prepare("
-    INSERT INTO `appointments`(`dateHour`)
-    VALUES(:lastname, :dateHour)");
-        $sth->bindValue(':lastname', $this->dateHour);
+    INSERT INTO `appointments`(`dateHour`,`idPatients`)
+    VALUES(:dateHour, :idPatients)");
+        $sth->bindValue(':dateHour', $this->dateHour);
+        $sth->bindValue(':idPatients', $this->idPatients);
         $sth->execute();
         // on vérifie si l'ajout a bien été effectué :
         $nbResults = $sth->rowCount();
@@ -101,4 +102,23 @@ class Appointment
         // que l'on retourne en sortie de méthode
         return $results;
     }
+
+       // // Update :
+
+       public function update($id)
+       {
+           //On se connecte à la BDD
+           $db = dbConnect();
+   
+           //On insère les données reçues   
+           //  on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
+           $sth = $db->prepare("
+            UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients, WHERE `id`=:id;");
+           $sth->bindValue(':id', $id, PDO::PARAM_INT);
+           $sth->bindValue(':dateHour', $this->dateHour);
+           $sth->bindValue(':idPatients', $this->idPatients);
+         
+   
+           return $sth->execute();
+       }
 }
