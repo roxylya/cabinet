@@ -82,7 +82,7 @@ class Patient
     }
 
 
-    public function addPatient()
+    public function add()
     {
 
         //On se connecte à la BDD
@@ -105,7 +105,7 @@ class Patient
 
     // Afficher tous les clients.
 
-    public static function getPatients(): array
+    public static function getAll(): array
     {
         $db = dbConnect();
         $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
@@ -115,7 +115,7 @@ class Patient
     }
 
     // vérifier si le mail existe déjà dans la base de données :
-    public static function mailExists(string $mail)
+    public static function exists(string $mail)
     {
         $db = dbConnect();
         $sql = 'SELECT `id` FROM `patients` WHERE `mail` = ?;';
@@ -130,18 +130,25 @@ class Patient
 
     public static function get($id): object
     {
+        // je me connecte à la base de données
         $db = dbConnect();
-        $sql = "SELECT * FROM `patients`  WHERE `id`=:id";
+        // je formule ma requête affiche tout de la table liste concernant l'id récupéré
+        $sql = 'SELECT * FROM `liste` WHERE `id`=:id';
+        // on prépare la requête
         $sth = $db->prepare($sql);
-        // On attache les valeurs
+        // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        // on exécute la requête
         $sth->execute();
+        // On stocke le résultat dans un objet puisque paramétrage effectué:
         $results = $sth->fetch();
+        // que l'on retourne en sortie de méthode
         return $results;
     }
 
+    // Update :
 
-    public static function updatePatient()
+    public static function update()
     {
         //On se connecte à la BDD
         $db = dbConnect();

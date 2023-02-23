@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../models/Patient.php');
 
 
 try {
-    $patients=Patient::getPatients();
+    $patients=Patient::getAll();
 } catch (\Throwable $th) {
     $errorMessage = $th->getMessage();
     include(__DIR__ . '/../views/templates/header.php');
