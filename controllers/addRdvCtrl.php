@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../models/database.php');
 require_once(__DIR__ . '/../config/constants.php');
 
 // on accède à la classe :
-require_once(__DIR__ . '/../models/Appointments.php');
+require_once(__DIR__ . '/../models/Appointment.php');
 
 
 // je crée un tableau où se trouveront tous les messages d'erreur :
@@ -61,7 +61,7 @@ try {
         // Nettoyer et valider la date :
 
         // enlève les espaces, et filtre la date récupéré en post:
-        $dateHour = trim(filter_input(INPUT_POST, 'dateHour', FILTER_SANITIZE_NUMBER_INT));
+        $dateHour = trim(filter_input(INPUT_POST, 'dateHour', FILTER_SANITIZE_SPECIAL_CHARS));
 
         // si pas de date entrée :
         if (empty($dateHour)) {
@@ -69,7 +69,7 @@ try {
             $alert['dateHour'] = 'Veuillez entrer la date de naissance.';
         } else {
             // je vérifie si la date correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($dateHour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
+            if (!filter_var($dateHour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATEHOUR . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['dateHour'] = 'Veuillez respecter le format.';
             }
@@ -81,7 +81,7 @@ try {
             // si l'id n'est pas récupéré dans le GET :
             if (empty($id)) {
                 // je crée un nouveau élément de la classe Appointment:
-                $appointment = new Patient();
+                $appointment = new Appointment();
                 // je lui donne les valeurs récupérées, nettoyées et validées :
                 $appointment->setDateHour($dateHour);
                 $appointment->setIdPatients($idPatients);
@@ -126,9 +126,9 @@ try {
 include(__DIR__ . '/../views/templates/header.php');
 
 if (empty($id)) {
-    include(__DIR__ . '/../views/patient/addRdv.php');
+    include(__DIR__ . '/../views/appointment/addRdv.php');
 } else {
-    include(__DIR__ . '/../views/patient/rdv.php');
+    include(__DIR__ . '/../views/appointment/rdv.php');
 }
 
 include(__DIR__ . '/../views/templates/footer.php');

@@ -12,12 +12,12 @@ class Appointment
     private int $idPatients;
 
 
-    public function __construct(string $dateHour, int $idPatients)
-    {
+    // public function __construct(string $dateHour, int $idPatients)
+    // {
       
-        $this->dateHour = $dateHour;
-        $this->idPatients = $idPatients;
-    }
+    //     $this->dateHour = $dateHour;
+    //     $this->idPatients = $idPatients;
+    // }
 
     public function setId(int $id)
     {

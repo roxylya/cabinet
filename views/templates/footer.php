@@ -1,5 +1,5 @@
 
-<footer class="text-center p-2">
+<footer class="d-flex align-items-center justify-content-center">
 La Manu, 2023, Hôpital
 </footer>
 

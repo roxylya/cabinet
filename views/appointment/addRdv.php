@@ -5,7 +5,7 @@
         <form method="post" class="form p-4">
             <div class="dateHour p-3">
                 <label for="dateHour">Date et heure :</label>
-                <input type="dateTime" name="dateHour" id="dateHour" value="<?= $dateHour ?? '' ?>" pattern="<?= REGEX_NAME ?>" required>
+                <input type="datetime-local" name="dateHour" id="dateHour" value="<?= $dateHour ?? '' ?>" pattern="<?= REGEX_DATEHOUR ?>" required>
                 <p class="error"><?= $alert['dateHour'] ?? '' ?></p>
             </div>
             <div class="lastname p-3">

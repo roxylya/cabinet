@@ -15,14 +15,14 @@ class Patient
     private string $phone;
     private string $mail;
 
-    public function __construct(string $lastname, string $firstname, string $birthdate, string $phone, string $mail)
-    {
-        $this->lastname = $lastname;
-        $this->firstname = $firstname;
-        $this->birthdate = $birthdate;
-        $this->phone = $phone;
-        $this->mail = $mail;
-    }
+    // public function __construct(string $lastname, string $firstname, string $birthdate, string $phone, string $mail)
+    // {
+    //     $this->lastname = $lastname;
+    //     $this->firstname = $firstname;
+    //     $this->birthdate = $birthdate;
+    //     $this->phone = $phone;
+    //     $this->mail = $mail;
+    // }
 
 
     public function setId(int $id)
