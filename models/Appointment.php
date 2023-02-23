@@ -5,36 +5,100 @@ require_once(__DIR__ . '/../models/database.php');
 // le helper :
 require_once(__DIR__ . '/../helper/dd.php');
 
-class Appointment{
+class Appointment
+{
     private int $id;
     private string $dateHour;
     private int $idPatients;
-   
 
-    public function __construct(int $id, string $dateHour, int $idPatients) {
+
+    public function __construct(int $id, string $dateHour, int $idPatients)
+    {
         $this->id = $id;
         $this->dateHour = $dateHour;
         $this->idPatients = $idPatients;
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
-    public function getId():int{
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function setDateHour(string $dateHour){
+    public function setDateHour(string $dateHour)
+    {
         $this->dateHour = $dateHour;
     }
-    public function getDateHour():string{
+    public function getDateHour(): string
+    {
         return $this->dateHour;
     }
 
-    public function setIdPatients(int $idPatients){
+    public function setIdPatients(int $idPatients)
+    {
         $this->dateHour = $idPatients;
     }
-    public function getIdPatients():int{
+    public function getIdPatients(): int
+    {
         return $this->idPatients;
+    }
+
+
+    // ajouter un rendez-vous
+
+    public function add()
+    {
+
+        //On se connecte à la BDD
+        $db = dbConnect();
+
+        //On insère les données reçues   
+        // on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
+        $sth = $db->prepare("
+    INSERT INTO `appointments`(`dateHour`)
+    VALUES(:lastname, :dateHour)");
+        $sth->bindValue(':lastname', $this->dateHour);
+        $sth->execute();
+        // on vérifie si l'ajout a bien été effectué :
+        $nbResults = $sth->rowCount();
+        // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
+        return ($nbResults > 0) ? true : false;
+    }
+
+
+    // Afficher tous les rendez-vous.
+
+    public static function getAll(): array
+    {
+        $db = dbConnect();
+        $sql = 'SELECT * FROM `appointments` ORDER BY `dateHour`;';
+        $sth = $db->query($sql);
+        $results = $sth->fetchAll();
+        return $results;
+    }
+
+
+
+    // Afficher les informations d'un rendez-vous' sélectionné (loupe) en récupérant l'id:
+
+    public static function get($id): object
+    {
+        // je me connecte à la base de données
+        $db = dbConnect();
+        // je formule ma requête affiche tout de la table liste concernant l'id récupéré
+        $sql = 'SELECT * FROM `appointments` WHERE `id`=:id';
+        // on prépare la requête
+        $sth = $db->prepare($sql);
+        // On affecte les valeurs au marqueur nominatif :
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        // on exécute la requête
+        $sth->execute();
+        // On stocke le résultat dans un objet puisque paramétrage effectué:
+        $results = $sth->fetch();
+        // que l'on retourne en sortie de méthode
+        return $results;
     }
 }

@@ -15,15 +15,14 @@ class Patient
     private string $phone;
     private string $mail;
 
-    public function __construct()
-    {
-        // string $lastname, string $firstname, string $birthdate, string $phone, string $mail
-        // $this->lastname = $lastname;
-        // $this->firstname = $firstname;
-        // $this->birthdate = $birthdate;
-        // $this->phone = $phone;
-        // $this->mail = $mail;
-    }
+    // public function __construct(string $lastname, string $firstname, string $birthdate, string $phone, string $mail)
+    // {
+    //     $this->lastname = $lastname;
+    //     $this->firstname = $firstname;
+    //     $this->birthdate = $birthdate;
+    //     $this->phone = $phone;
+    //     $this->mail = $mail;
+    // }
 
 
     public function setId(int $id)
@@ -98,8 +97,11 @@ class Patient
         $sth->bindValue(':birthdate', $this->birthdate);
         $sth->bindValue(':phone', $this->phone);
         $sth->bindValue(':mail', $this->mail);
-
-        return $sth->execute();
+        $sth->execute();
+        // on vérifie si l'ajout a bien été effectué :
+        $nbResults=$sth->rowCount();
+        // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
+        return($nbResults > 0) ? true : false ;
     }
 
 
@@ -133,7 +135,7 @@ class Patient
         // je me connecte à la base de données
         $db = dbConnect();
         // je formule ma requête affiche tout de la table liste concernant l'id récupéré
-        $sql = 'SELECT * FROM `liste` WHERE `id`=:id';
+        $sql = 'SELECT * FROM `patients` WHERE `id`=:id';
         // on prépare la requête
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
@@ -146,28 +148,23 @@ class Patient
         return $results;
     }
 
-    // Update :
+    // // Update :
 
-    public static function update()
+    public function update($id)
     {
         //On se connecte à la BDD
         $db = dbConnect();
 
         //On insère les données reçues   
-        // $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS);
-        $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS);
-        $birthdate = filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_NUMBER_INT);
-        $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT);
-        $mail = filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL);
         //  on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
         $sth = $db->prepare("
-         UPDATE `liste` SET `produit`=:produit, `prix`=:prix, `nombre`=:nombre WHERE `id`=:id;");
-        $sth->bindValue(':lastname', $lastname);
-        $sth->bindValue(':firstname', $firstname);
-        $sth->bindValue(':birthdate', $birthdate);
-        $sth->bindValue(':phone', $phone);
-        $sth->bindValue(':mail', $mail);
+         UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;");
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->bindValue(':lastname', $this->lastname);
+        $sth->bindValue(':firstname', $this->firstname);
+        $sth->bindValue(':birthdate', $this->birthdate);
+        $sth->bindValue(':phone', $this->phone);
+        $sth->bindValue(':mail', $this->mail);
 
         return $sth->execute();
     }

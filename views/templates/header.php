@@ -24,7 +24,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="w-100 d-flex flex-column flex-lg-row justify-content-end align-items-center navbar-nav pt-2 pt-lg-0">
-                        <a class="nav-link pe-lg-5" href="/controllers/patientProfilCtrl.php">Créer un patient</a>
+                        <a class="nav-link pe-lg-5" href="/controllers/addPatientCtrl.php">Créer un patient</a>
                         <a class="nav-link pe-lg-5" href="/controllers/patientsListCtrl.php">Patientèle</a>
                         <a class="nav-link pe-lg-5" href="/controllers/addRdvCtrl.php">Ajouter un rendez-vous</a>
                         <a class="nav-link pe-lg-5" href="/controllers/rdvListCtrl.php">Agenda</a>

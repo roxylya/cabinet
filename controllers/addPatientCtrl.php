@@ -10,7 +10,7 @@ require_once(__DIR__ . '/../models/Patient.php');
 $alert = [];
 
 // je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
 
 // je teste si mon code fonctionne je :
@@ -118,8 +118,8 @@ try {
         }
 
 
-        // si la requête a été émise en POST et que le tableau alert est vide :
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($alert)) {
+        // si le tableau alert est vide :
+        if (empty($alert)) {
             // si l'id n'est pas récupéré dans le GET :
             if (empty($id)) {
                 // je crée un nouveau élément de la classe Patient:
@@ -140,23 +140,32 @@ try {
                 $birthdate = '';
                 $phone = '';
                 $mail = '';
+            } else {
+                // je crée un nouveau élément de la classe Patient:
+                $patient = new Patient();
+                // je lui donne les valeurs récupérées, nettoyées et validées :
+                $patient->setLastname($lastname);
+                $patient->setFirstname($firstname);
+                $patient->setMail($mail);
+                $patient->setPhone($phone);
+                $patient->setBirthdate($birthdate);
+                // Ajouter l'enregistrement du nouveau patient à la base de données :
+                $patient->update($id);
+                // message de confirmation de l'ajout du patient à la base de données :
+                $messageOk = 'Les données du patient ont été modifiées.';
             }
         }
-        if (!empty($id)) {
-            // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
-            $profil = Patient::get($id);
-        }
     }
-} catch (\Throwable $e) {
+    if (!empty($id)) {
+        // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
+        $patient = Patient::get($id);
+    }
+} catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
     include(__DIR__ . '/../views/error.php');
     die;
 }
-
-
-
-
 
 include(__DIR__ . '/../views/templates/header.php');
 

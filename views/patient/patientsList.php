@@ -20,7 +20,7 @@
                     <td>' . $patient->phone . '</td>
                     <td>' . $patient->mail . '</td>
                     <td class="actions">
-                        <a href="/controllers/patientProfilCtrl.php?id=' . $patient->id .
+                        <a href="/controllers/addPatientCtrl.php?id=' . $patient->id .
                     // '&lastname=' . $patient->lastname .
                     // '&firstname=' . $patient->firstname .
                     // '&birthdate=' . date('d-m-Y', strtotime($patient->birthdate)) .
