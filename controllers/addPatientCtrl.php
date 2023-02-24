@@ -82,7 +82,7 @@ try {
         }
 
 
-        // Nettoyer et valider la date :
+        // Nettoyer et valider la date de naissance :
 
         // enlève les espaces, et filtre la date récupéré en post:
         $birthdate = trim(filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_NUMBER_INT));
@@ -96,7 +96,12 @@ try {
             if (!filter_var($birthdate, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['birthdate'] = 'Veuillez respecter le format.';
+            } else{
+                if ($birthdate < date('Y-m-d', strtotime('-130 years')) || $birthdate> date('Y-m-d')){
+                    $alert['birthdate'] = 'AH OUI ?!';
+                }
             }
+
         }
 
 

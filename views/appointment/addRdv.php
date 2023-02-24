@@ -3,10 +3,15 @@
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
         <p class="messageOk p-2"><?= $messageOk ?? '' ?></p>
         <form method="post" class="form p-4">
-            <div class="dateHour p-3">
-                <label for="dateHour">Date et heure :</label>
-                <input type="datetime-local" name="dateHour" id="dateHour" value="<?= $dateHour ?? '' ?>" pattern="<?= REGEX_DATEHOUR ?>" required>
-                <p class="error"><?= $alert['dateHour'] ?? '' ?></p>
+            <div class="date p-3">
+                <label for="dateHour">Date :</label>
+                <input type="date" name="date" id="date" value="<?= $dateHour ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+3 months')) ?>" pattern="<?= REGEX_DATE ?>" required>
+                <p class="error"><?= $alert['date'] ?? '' ?></p>
+            </div>
+            <div class="hour p-3">
+                <label for="hour">Heure :</label>
+                <input type="time" name="hour" id="hour" value="<?= $hour ?? '' ?>" pattern="<?= REGEX_HOUR ?>" required>
+                <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
             <div class="lastname p-3">
                 <label for="lastname">Nom : </label>

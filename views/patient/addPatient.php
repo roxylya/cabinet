@@ -15,7 +15,7 @@
             </div>
             <div class="birthdate p-3">
                 <label for="birthdate">Date de Naissance : </label>
-                <input type="date" name="birthdate" id="birthdate" value="<?= $birthdate ?? '' ?>" min="" max="" required>
+                <input type="date" name="birthdate" id="birthdate" value="<?= $birthdate ?? '' ?>" min="<?= date('Y-m-d', strtotime('-130 years')) ?>" max="<?= date('Y-m-d') ?>" required>
                 <p class="error"><?= $alert['birthdate'] ?? '' ?></p>
             </div>
             <div class="phone p-3">

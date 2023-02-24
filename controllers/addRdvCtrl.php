@@ -61,20 +61,37 @@ try {
         // Nettoyer et valider la date :
 
         // enlève les espaces, et filtre la date récupéré en post:
-        $dateHour = trim(filter_input(INPUT_POST, 'dateHour', FILTER_SANITIZE_SPECIAL_CHARS));
+        $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_SPECIAL_CHARS));
 
         // si pas de date entrée :
-        if (empty($dateHour)) {
+        if (empty($date)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['dateHour'] = 'Veuillez entrer la date de naissance.';
+            $alert['date'] = 'Veuillez entrer la date de naissance.';
         } else {
             // je vérifie si la date correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($dateHour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATEHOUR . '/')))) {
+            if (!filter_var($date, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-                $alert['dateHour'] = 'Veuillez respecter le format.';
+                $alert['date'] = 'Veuillez respecter le format.';
             }
         }
 
+
+        // Nettoyer et valider le numéro de téléphone :
+
+        // enlève les espaces, et filtre le numéro de téléphone récupéré en post:
+        $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT));
+
+        // si pas de numéro entré :
+        if (empty($phone)) {
+            // j'ajoute le message d'erreur au tableau alert :
+            $alert['phone'] = 'Veuillez entrer un numéro de téléphone.';
+        } else {
+            // je vérifie si le numéro correspond à la regex (qui est une constante définie dans constants.php)
+            if (!filter_var($phone, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_PHONENUMBER . '/')))) {
+                // si le numéro ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
+                $alert['phone'] = 'Veuillez respecter le format.';
+            }
+        }
 
         // si le tableau alert est vide :
         if (empty($alert)) {
