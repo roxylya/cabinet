@@ -38,7 +38,7 @@ try {
             } else {
                 // Si le mail est validé :
                 // je vérifie si le mail n'est pas déjà présent en base de données:
-                if (Patient::exists($mail)) {
+                if ((empty($id)) && Patient::existsMail($mail)) {
                     // si le mail existe j'ajoute le message d'erreur au tableau d'alert :
                     $alert['mail'] = 'Mail déjà existant.';
                 }
@@ -96,8 +96,8 @@ try {
             if (!filter_var($birthdate, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['birthdate'] = 'Veuillez respecter le format.';
-            } else{
-                if ($birthdate < date('Y-m-d', strtotime('-130 years')) || $birthdate> date('Y-m-d')){
+            } else {
+                if ($birthdate < date('Y-m-d', strtotime('-130 years')) || $birthdate > date('Y-m-d')) {
                     $alert['birthdate'] = 'AH OUI ?!';
                 }
             }
@@ -120,6 +120,7 @@ try {
                 $alert['phone'] = 'Veuillez respecter le format.';
             }
         }
+
 
 
         // si le tableau alert est vide :
@@ -161,9 +162,11 @@ try {
         }
     }
     if (!empty($id)) {
-        // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
+
         $patient = Patient::get($id);
-    }
+    } // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
+
+
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();

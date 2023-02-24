@@ -117,7 +117,7 @@ class Patient
     }
 
     // vérifier si le mail existe déjà dans la base de données :
-    public static function exists(string $mail)
+    public static function existsMail(string $mail)
     {
         $db = dbConnect();
         $sql = 'SELECT `id` FROM `patients` WHERE `mail` = ?;';
@@ -128,6 +128,19 @@ class Patient
         return (empty($results)) ? false : true;
     }
 
+
+     // vérifier si l'id n'existe pas dans la base de données :
+        public static function existsId(int $id)
+        {
+            $db = dbConnect();
+            $sql = 'SELECT `id` FROM `patients` WHERE `id` = ?;';
+            $sth = $db->prepare($sql);
+            $sth->execute([$id]);
+            $results = $sth->fetchAll();
+    
+            return (empty($results)) ? true : false;
+        }
+
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
     public static function get($id): object
@@ -136,7 +149,7 @@ class Patient
         $db = dbConnect();
         // je formule ma requête affiche tout de la table liste concernant l'id récupéré
         $sql = 'SELECT * FROM `patients` WHERE `id`=:id';
-        // on prépare la requête
+        // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);

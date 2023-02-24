@@ -114,6 +114,8 @@ try {
             }
         }
 
+        
+
         // si le tableau alert est vide :
         if (empty($alert)) {
             // si l'id n'est pas récupéré dans le GET :
