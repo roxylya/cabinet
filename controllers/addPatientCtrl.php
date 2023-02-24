@@ -101,7 +101,6 @@ try {
                     $alert['birthdate'] = 'AH OUI ?!';
                 }
             }
-
         }
 
 

@@ -66,12 +66,33 @@ try {
         // si pas de date entrée :
         if (empty($date)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['date'] = 'Veuillez entrer la date de naissance.';
+            $alert['date'] = 'Veuillez entrer la date du rdv.';
         } else {
             // je vérifie si la date correspond à la regex (qui est une constante définie dans constants.php)
             if (!filter_var($date, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['date'] = 'Veuillez respecter le format.';
+            } else {
+                if ($date > date('Y-m-d', strtotime('+1 year')) || $date < date('Y-m-d')) {
+                    $alert['date'] = 'La date du rendez-vous doit être comprise entre aujourd\'hui et an+1.';
+                }
+            }
+        }
+
+        // Nettoyer et valider l'heure :
+
+        // enlève les espaces, et filtre l'heure récupérée en post:
+        $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_SPECIAL_CHARS));
+
+        // si pas d'heure entrée :
+        if (empty($hour)) {
+            // j'ajoute le message d'erreur au tableau alert :
+            $alert['hour'] = 'Veuillez entrer l\'heure du rdv.';
+        } else {
+            // je vérifie si l'heure correspond à la regex (qui est une constante définie dans constants.php)
+            if (!filter_var($hour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
+                // si l'heure ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
+                $alert['hour'] = 'Les rdv doivent être pris de 9h à 17h30, par tranche de 30 minutes.';
             }
         }
 
@@ -102,8 +123,8 @@ try {
                 // je lui donne les valeurs récupérées, nettoyées et validées :
                 $appointment->setDateHour($dateHour);
                 $appointment->setIdPatients($idPatients);
-            
-                
+
+
                 // Ajouter l'enregistrement du nouveau rdv à la base de données :
                 $appointment->add();
                 // message de confirmation de l'ajout du rdv à la base de données :

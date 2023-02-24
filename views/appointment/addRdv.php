@@ -5,12 +5,12 @@
         <form method="post" class="form p-4">
             <div class="date p-3">
                 <label for="dateHour">Date :</label>
-                <input type="date" name="date" id="date" value="<?= $dateHour ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+3 months')) ?>" pattern="<?= REGEX_DATE ?>" required>
+                <input type="date" name="date" id="date" value="<?= $dateHour ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 year')) ?>" pattern="<?= REGEX_DATE ?>" required>
                 <p class="error"><?= $alert['date'] ?? '' ?></p>
             </div>
             <div class="hour p-3">
                 <label for="hour">Heure :</label>
-                <input type="time" name="hour" id="hour" value="<?= $hour ?? '' ?>" pattern="<?= REGEX_HOUR ?>" required>
+                <input type="time" name="hour" id="hour" value="<?= $hour ?? '' ?>" min="09:00" max="17:30" pattern="<?= REGEX_HOUR ?>" required>
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
             <div class="lastname p-3">
