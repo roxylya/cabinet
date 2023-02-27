@@ -1,6 +1,6 @@
 <main class="patientPatient d-flex flex-column justify-content-center align-items-center py-5">
+    <p class="messageOk"><?= $messageOk ?? '' ?></p>
     <form method="post" class="form p-4">
-
         <div class="lastname p-3">
             <label for="lastname">Nom :</label>
             <input type="text" name="lastname" id="lastname" class="noEdit" value="<?= $patient->lastname ?>" pattern="<?= REGEX_NAME ?>" readonly>
@@ -13,7 +13,7 @@
         </div>
         <div class="birthdate p-3">
             <label for="birthdate">Date de Naissance : </label>
-            <input type="date" name="birthdate" id="birthdate" class="noEdit"  value="<?= $patient->birthdate ?>" readonly>
+            <input type="date" name="birthdate" id="birthdate" class="noEdit" value="<?= $patient->birthdate ?>" readonly>
             <p class="error"><?= $alert['birthdate'] ?? '' ?></p>
         </div>
         <div class="phone p-3">

@@ -13,3 +13,4 @@ define('REGEX_DATE', '^[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}$');
 define('REGEX_PHONENUMBER', '^(0[1-9]{1}[0-9]{8}|\+?33[1-9][0-9]{8})$');
 define('REGEX_HOUR', '^(0[9]|[1][0-7])$');
 define('REGEX_MINUT', '^[0,3][0]$');
+define('REGEX_PATIENT','^[a-zA-Z éèêë\'\-]{2,34} [a-zA-Z éèêë\'\-]{2,34}$');

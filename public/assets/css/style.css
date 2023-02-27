@@ -65,6 +65,13 @@ input {
     text-align: center;
 }
 
+.patient{
+    width: 20rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+
 select  {
     width: 9rem;
     border-radius: 1rem;
@@ -100,6 +107,7 @@ input[type="submit"]:hover {
 
 .messageOk {
     color: rgb(11, 54, 11);
+    text-align: center;
 }
 
 

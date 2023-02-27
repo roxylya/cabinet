@@ -12,7 +12,7 @@
                 <label for="hour">Heure :</label>
                 <div class="d-flex justify-content-around align-items-center">
                     <select name="hour" id="hour-select">
-                        <option value="9">9</option>
+                        <option value="09">09</option>
                         <option value="10">10</option>
                         <option value="11">11</option>
                         <option value="12">12</option>
@@ -29,19 +29,22 @@
                 </div>
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
-            <div class="lastname p-3">
-                <label for="lastname">Nom : </label>
-                <input type="text" name="lastname" id="lastname" value="<?= $lastname ?? '' ?>" pattern="<?= REGEX_NAME ?>" required>
+            <div class="p-3">
+                <label for="idPatients">Patient : </label>
+                <select class="patient" name="idPatients" id="idPatients">
+                    <?php foreach ($patients as $patient) {
+                        echo '<option value="' . $patient->id . '">' . $patient->lastname . ' ' . $patient->firstname . '</option>
+                    ';
+                    } ?>
+                </select>
                 <p class="error"><?= $alert['lastname'] ?? '' ?></p>
             </div>
-            <div class="firstname p-3">
-                <label for="firstname">Prénom : </label>
-                <input type="text" name="firstname" id="firstname" value="<?= $firstname ?? '' ?>" pattern="<?= REGEX_NAME ?>" required>
-                <p class="error"><?= $alert['firstname'] ?? '' ?></p>
-            </div>
-            <div class="btnEnvoyer text-center p-3">
+            <div class="btnEnvoyer text-center">
                 <input type="submit" value="Envoyer">
             </div>
         </form>
+        <div class="br py-4">
+
+        </div>
     </div>
 </main>

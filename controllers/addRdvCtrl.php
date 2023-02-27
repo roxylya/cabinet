@@ -6,6 +6,9 @@ require_once(__DIR__ . '/../models/database.php');
 require_once(__DIR__ . '/../config/constants.php');
 
 // on accède à la classe :
+require_once(__DIR__ . '/../models/Patient.php');
+
+// on accède à la classe :
 require_once(__DIR__ . '/../models/Appointment.php');
 
 
@@ -16,57 +19,44 @@ $alert = [];
 $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
 
+
 // je teste si mon code fonctionne :
 try {
+    // je récupère la liste des patients pour obtenir les noms et prénom dans le select :
+    $patients = Patient::getAll();
+
 
     // Nettoyage et validation du formulaire reçu en post :
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        // Nettoyer et valider le patient :
 
-        // Nettoyer et valider le prénom :
+        // filtre le nom récupéré en post:
+        $idPatients = filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_NUMBER_INT);
 
-        // enlève les espaces, et filtre le prénom récupéré en post:
-        $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS));
-
-        // si pas de prénom entré :
-        if (empty($firstname)) {
+        // si pas de patient entré :
+        if (empty($idPatients)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['firstname'] = 'Veuillez entrer le prénom.';
-        } else {
-            // je vérifie si le prénom correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($firstname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_NAME . '/')))) {
-                // si le prénom ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-                $alert['firstname'] = 'Format incorrect.';
-            }
+            $alert['idPatients'] = 'Veuillez sélectionner un patient dans la liste.';
         }
-
-
-        // Nettoyer et valider le nom :
-
-        // enlève les espaces, et filtre le nom récupéré en post:
-        $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS));
-
-        // si pas de nom entré :
-        if (empty($lastname)) {
-            // j'ajoute le message d'erreur au tableau alert :
-            $alert['lastname'] = 'Veuillez entrer le nom.';
-        } else {
-            // je vérifie si le nom correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($lastname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_NAME . '/')))) {
-                // si le prénom ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-                $alert['lastname'] = 'Format incorrect.';
-            }
-        }
+        // else {
+        //     // je vérifie si l'idPatients existe dans la base de données comme id de la table patient
+        //     // $patient=Patient::existsIdPatients($idPatients);
+        //     // if (!$patient=Patient::existsIdPatients($idPatients)){
+        //     //     // si le patient ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
+        //     //     $alert['idPatients'] = 'Patient inexistant.';
+        //     // }
+        // }
 
         // Nettoyer et valider la date :
 
         // enlève les espaces, et filtre la date récupéré en post:
-        $dateAppointment = trim(filter_input(INPUT_POST, 'dateAppointment', FILTER_SANITIZE_SPECIAL_CHARS));
+        $dateAppointment = trim(filter_input(INPUT_POST, 'dateAppointment', FILTER_SANITIZE_NUMBER_INT));
 
         // si pas de date entrée :
         if (empty($dateAppointment)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['dateAppointment'] = 'Veuillez entrer la date du rdv.';
+            $alert['dateAppointment'] = 'Veuillez sélectionner la date du rdv.';
         } else {
             // je vérifie si la date correspond à la regex (qui est une constante définie dans constants.php)
             if (!filter_var($dateAppointment, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
@@ -76,13 +66,16 @@ try {
                 if ($dateAppointment > date('Y-m-d', strtotime('+1 year')) || $dateAppointment < date('Y-m-d')) {
                     $alert['dateAppointment'] = 'La date du rendez-vous doit être comprise entre aujourd\'hui et an+1.';
                 }
+                // if ($dateAppointment = date('') ) {
+                //     $alert['dateAppointment'] = 'Le cabinet est fermé le dimanche.';
+                // }
             }
         }
 
         // Nettoyer et valider l'heure :
 
         // enlève les espaces, et filtre l'heure récupérée en post:
-        $hour = intval(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_SPECIAL_CHARS));
+        $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_NUMBER_INT));
 
         // si pas d'heure entrée :
         if (empty($hour)) {
@@ -99,7 +92,7 @@ try {
         // Nettoyer et valider les minutes :
 
         // enlève les espaces, et filtre l'heure récupérée en post:
-        $minut = intval(filter_input(INPUT_POST, 'minut', FILTER_SANITIZE_SPECIAL_CHARS));
+        $minut = trim(filter_input(INPUT_POST, 'minut', FILTER_SANITIZE_NUMBER_INT));
 
         // si pas de minute entrée :
         if (empty($minut)) {
@@ -113,63 +106,46 @@ try {
             }
         }
 
-
-
-        // Nettoyer et valider le numéro de téléphone :
-
-        // enlève les espaces, et filtre le numéro de téléphone récupéré en post:
-        $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_NUMBER_INT));
-
-        // si pas de numéro entré :
-        if (empty($phone)) {
-            // j'ajoute le message d'erreur au tableau alert :
-            $alert['phone'] = 'Veuillez entrer un numéro de téléphone.';
-        } else {
-            // je vérifie si le numéro correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($phone, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_PHONENUMBER . '/')))) {
-                // si le numéro ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-                $alert['phone'] = 'Veuillez respecter le format.';
-            }
-        }
-
-
-
         // si le tableau alert est vide :
         if (empty($alert)) {
+
             // si l'id n'est pas récupéré dans le GET :
             if (empty($id)) {
+                $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut;
+                $idPatients = intval(filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_NUMBER_INT));
                 // je crée un nouveau élément de la classe Appointment:
                 $appointment = new Appointment();
                 // je lui donne les valeurs récupérées, nettoyées et validées :
                 $appointment->setDateHour($dateHour);
                 $appointment->setIdPatients($idPatients);
-
-
                 // Ajouter l'enregistrement du nouveau rdv à la base de données :
-                $appointment->add();
+                $appointment->addAppointment($idPatients);
                 // message de confirmation de l'ajout du rdv à la base de données :
                 $messageOk = 'Nouveau RDV enregistré.';
                 // je réinitialise l'affichage :
-                $firstname = '';
-                $lastname = '';
-                $dateHour = '';
-            } else {
-                // je crée un nouveau élément de la classe Appointment:
-                $appointment = new Appointment();
-                // je lui donne les valeurs récupérées, nettoyées et validées :
-                $appointment->setDateHour($dateHour);
-                $appointment->setIdPatients($idPatients);
-                // Ajouter l'enregistrement du nouveau RDV à la base de données :
-                $appointment->update($id);
-                // message de confirmation de l'ajout du RDV à la base de données :
-                $messageOk = 'Les données du RDV ont été modifiées.';
+                $date = '';
+                $patient = '';
+                $hour = '';
+                $minut = '';
             }
+            // else {
+            //     // je crée un nouveau élément de la classe Appointment:
+            //     $appointment = new Appointment();
+            //     // je lui donne les valeurs récupérées, nettoyées et validées :
+            //     $appointment->setDateHour($dateHour);
+            //     $appointment->setIdPatients($idPatients);
+            //     // Ajouter l'enregistrement du nouveau RDV à la base de données :
+            //     $appointment->update($id);
+            //     // message de confirmation de l'ajout du RDV à la base de données :
+            //     $messageOk = 'Les données du RDV ont été modifiées.';
+            // }
         }
     }
-    if (!empty($id)) {
-        // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
-        $appointment = Appointment::get($id);
-    }
+    // if (!empty($id)) {
+    //     // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
+    //     $appointment = Appointment::get($id);
+    // }
+
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();

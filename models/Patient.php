@@ -105,7 +105,7 @@ class Patient
     }
 
 
-    // Afficher tous les clients.
+    // Afficher tous les patients.
     public static function getAll(): array
     {
         $db = dbConnect();
@@ -116,6 +116,7 @@ class Patient
         return $results;
     }
 
+ 
 
     // vérifier si le mail existe déjà dans la base de données :
     public static function existsMail(string $mail)
@@ -142,6 +143,17 @@ class Patient
             return (empty($results)) ? false : true;
         }
 
+        // vérifier si l'id existe dans la base de données :
+            public static function existsIdPatients(int $idPatients)
+            {
+                $db = dbConnect();
+                $sql = 'SELECT `id` FROM `patients` WHERE `id` = :idPatients;';
+                $sth = $db->prepare($sql);
+                $sth->execute([$idPatients]);
+                $results = $sth->fetchAll();
+        
+                return (empty($results)) ? false : true;
+            }
 
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
