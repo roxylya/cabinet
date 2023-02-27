@@ -61,20 +61,20 @@ try {
         // Nettoyer et valider la date :
 
         // enlève les espaces, et filtre la date récupéré en post:
-        $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_SPECIAL_CHARS));
+        $dateAppointment = trim(filter_input(INPUT_POST, 'dateAppointment', FILTER_SANITIZE_SPECIAL_CHARS));
 
         // si pas de date entrée :
-        if (empty($date)) {
+        if (empty($dateAppointment)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['date'] = 'Veuillez entrer la date du rdv.';
+            $alert['dateAppointment'] = 'Veuillez entrer la date du rdv.';
         } else {
             // je vérifie si la date correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($date, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
+            if (!filter_var($dateAppointment, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
                 // si la date ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-                $alert['date'] = 'Veuillez respecter le format.';
+                $alert['dateAppointment'] = 'Veuillez respecter le format.';
             } else {
-                if ($date > date('Y-m-d', strtotime('+1 year')) || $date < date('Y-m-d')) {
-                    $alert['date'] = 'La date du rendez-vous doit être comprise entre aujourd\'hui et an+1.';
+                if ($dateAppointment > date('Y-m-d', strtotime('+1 year')) || $dateAppointment < date('Y-m-d')) {
+                    $alert['dateAppointment'] = 'La date du rendez-vous doit être comprise entre aujourd\'hui et an+1.';
                 }
             }
         }
@@ -82,7 +82,7 @@ try {
         // Nettoyer et valider l'heure :
 
         // enlève les espaces, et filtre l'heure récupérée en post:
-        $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_SPECIAL_CHARS));
+        $hour = intval(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_SPECIAL_CHARS));
 
         // si pas d'heure entrée :
         if (empty($hour)) {
@@ -90,11 +90,29 @@ try {
             $alert['hour'] = 'Veuillez entrer l\'heure du rdv.';
         } else {
             // je vérifie si l'heure correspond à la regex (qui est une constante définie dans constants.php)
-            if (!filter_var($hour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_DATE . '/')))) {
+            if (!filter_var($hour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_HOUR . '/')))) {
                 // si l'heure ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['hour'] = 'Les rdv doivent être pris de 9h à 17h30, par tranche de 30 minutes.';
             }
         }
+
+        // Nettoyer et valider les minutes :
+
+        // enlève les espaces, et filtre l'heure récupérée en post:
+        $minut = intval(filter_input(INPUT_POST, 'minut', FILTER_SANITIZE_SPECIAL_CHARS));
+
+        // si pas de minute entrée :
+        if (empty($minut)) {
+            // j'ajoute le message d'erreur au tableau alert :
+            $alert['minut'] = 'Veuillez entrer l\'heure du rdv.';
+        } else {
+            // je vérifie si les minutes correspondent à la regex (qui est une constante définie dans constants.php)
+            if (!filter_var($minut, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_MINUT . '/')))) {
+                // si l'entrée ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
+                $alert['minut'] = 'Les rdv doivent être pris de 9h à 17h30, par tranche de 30 minutes.';
+            }
+        }
+
 
 
         // Nettoyer et valider le numéro de téléphone :
@@ -114,7 +132,7 @@ try {
             }
         }
 
-        
+
 
         // si le tableau alert est vide :
         if (empty($alert)) {

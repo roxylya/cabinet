@@ -65,6 +65,16 @@ input {
     text-align: center;
 }
 
+select  {
+    width: 9rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+option  {
+    text-align: center;
+}
+
 .noEdit {
     background-color: #ddecf1;
     border: none;
@@ -220,6 +230,11 @@ td {
 
     input {
         width: 15rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+    select {
+        width: 7rem;
         border-radius: 1rem;
         text-align: center;
     }

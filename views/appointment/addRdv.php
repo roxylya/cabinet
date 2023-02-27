@@ -4,13 +4,29 @@
         <p class="messageOk p-2"><?= $messageOk ?? '' ?></p>
         <form method="post" class="form p-4">
             <div class="date p-3">
-                <label for="dateHour">Date :</label>
-                <input type="date" name="date" id="date" value="<?= $dateHour ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 year')) ?>" pattern="<?= REGEX_DATE ?>" required>
-                <p class="error"><?= $alert['date'] ?? '' ?></p>
+                <label for="dateAppointment">Date :</label>
+                <input type="date" name="dateAppointment" id="dateAppointment" value="<?= $dateAppointment ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 year')) ?>" pattern="<?= REGEX_DATE ?>" required>
+                <p class="error"><?= $alert['dateAppointment'] ?? '' ?></p>
             </div>
-            <div class="hour p-3">
+            <div class="hourMinut p-3">
                 <label for="hour">Heure :</label>
-                <input type="time" name="hour" id="hour" value="<?= $hour ?? '' ?>" min="09:00" max="17:30" pattern="<?= REGEX_HOUR ?>" required>
+                <div class="d-flex justify-content-around align-items-center">
+                    <select name="hour" id="hour-select">
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                    </select>
+                    <select name="minut" id="minut-select">
+                        <option value="00">00</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
             <div class="lastname p-3">
