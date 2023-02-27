@@ -89,32 +89,33 @@ class Patient
 
         //On insère les données reçues   
         // on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = $db->prepare("
-        INSERT INTO `patients`(`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-        VALUES(:lastname, :firstname, :birthdate, :phone, :mail)");
+        $sth = $db->prepare('INSERT INTO `patients`(`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES(:lastname, :firstname, :birthdate, :phone, :mail);');
         $sth->bindValue(':lastname', $this->lastname);
         $sth->bindValue(':firstname', $this->firstname);
         $sth->bindValue(':birthdate', $this->birthdate);
         $sth->bindValue(':phone', $this->phone);
         $sth->bindValue(':mail', $this->mail);
         $sth->execute();
+
         // on vérifie si l'ajout a bien été effectué :
         $nbResults=$sth->rowCount();
+
         // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
         return($nbResults > 0) ? true : false ;
     }
 
 
     // Afficher tous les clients.
-
     public static function getAll(): array
     {
         $db = dbConnect();
         $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
         $sth = $db->query($sql);
         $results = $sth->fetchAll();
+
         return $results;
     }
+
 
     // vérifier si le mail existe déjà dans la base de données :
     public static function existsMail(string $mail)
@@ -129,7 +130,7 @@ class Patient
     }
 
 
-     // vérifier si l'id n'existe pas dans la base de données :
+     // vérifier si l'id existe dans la base de données :
         public static function existsId(int $id)
         {
             $db = dbConnect();
@@ -138,28 +139,36 @@ class Patient
             $sth->execute([$id]);
             $results = $sth->fetchAll();
     
-            return (empty($results)) ? true : false;
+            return (empty($results)) ? false : true;
         }
+
 
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
-    public static function get($id): object
+    public static function get($id): object | bool
     {
         // je me connecte à la base de données
         $db = dbConnect();
+
         // je formule ma requête affiche tout de la table liste concernant l'id récupéré
-        $sql = 'SELECT * FROM `patients` WHERE `id`=:id';
+        $sql = 'SELECT * FROM `patients` WHERE `id`=:id;';
+
         // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
         $sth = $db->prepare($sql);
+
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
+
         // on exécute la requête
         $sth->execute();
+
         // On stocke le résultat dans un objet puisque paramétrage effectué:
         $results = $sth->fetch();
+
         // que l'on retourne en sortie de méthode
         return $results;
     }
+
 
     // // Update :
 
@@ -170,15 +179,18 @@ class Patient
 
         //On insère les données reçues   
         //  on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = $db->prepare("
-         UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;");
+        $sth = $db->prepare(' UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;');
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->bindValue(':lastname', $this->lastname);
         $sth->bindValue(':firstname', $this->firstname);
         $sth->bindValue(':birthdate', $this->birthdate);
         $sth->bindValue(':phone', $this->phone);
         $sth->bindValue(':mail', $this->mail);
+        $sth->execute();
+       // on vérifie si l'ajout a bien été effectué :
+        $nbResults=$sth->rowCount();
 
-        return $sth->execute();
+        // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
+        return($nbResults > 0) ? true : false ;
     }
 }

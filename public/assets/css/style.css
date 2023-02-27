@@ -41,8 +41,8 @@ h2 {
 
 @media (max-width:1265px) {
     .exos {
-    height: 12rem;
-    width: 20rem;
+        height: 12rem;
+        width: 20rem;
     }
 }
 
@@ -65,10 +65,10 @@ input {
     text-align: center;
 }
 
-.noEdit{
-   background-color: #ddecf1;
-   border: none;
-   text-align: center;
+.noEdit {
+    background-color: #ddecf1;
+    border: none;
+    text-align: center;
 }
 
 .form {
@@ -129,6 +129,19 @@ td {
     display: none;
 }
 
+/* page error404 */
+
+.error404 {
+    font-size: 15rem;
+    color: #f99e49;
+    text-shadow: 0.1em 0.1em 0.2em #000000;
+}
+
+.bgError404{
+    background-color: #b4d5e072;
+    height: 75vh;
+}
+
 @media only screen and (orientation:portrait) {
     table {
         display: none;
@@ -157,9 +170,22 @@ td {
         align-items: center;
         justify-content: center;
     }
+
+    .error404 {
+        font-size: 5rem;
+        color: #f99e49;
+        text-shadow: 0.1em 0.1em 0.2em #000000;
+    }
+    
+    .bgError404{
+        background-color: #b4d5e072;
+        height: 75vh;
+    }
+
     .pen {
         background-color: rgba(47, 79, 79, 0.164);
     }
+
     .form {
         width: 90%;
     }
@@ -212,19 +238,19 @@ td {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
 }
 
-.pen{
+.pen {
     width: 1.6rem;
 }
 
-.btnPen {  
+.btnPen {
     background-color: darkslategray;
-    width: 12rem;    
+    width: 12rem;
     border-radius: 1rem;
     border: outset 2px black;
-    
+
 }
 
 .btnPen:hover {
@@ -235,6 +261,7 @@ td {
 .propriety {
     font-weight: bolder;
 }
+
 
 /* footer */
 footer {

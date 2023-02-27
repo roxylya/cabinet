@@ -1,6 +1,6 @@
 
 // Fonction pour désactiver le readOnly
-function NotReadOnly() {
+function notReadOnly() {
     let lastname = document.getElementById("lastname");
     let firstname = document.getElementById("firstname");
     let birthdate = document.getElementById("birthdate");
@@ -14,13 +14,15 @@ function NotReadOnly() {
     mail.readOnly = false;
   }
 
-  function removeClass(){
-    let input = document.querySelectorAll("input");
-    // je supprime la valeur de l'attribut class :
-    input.classList.remove("noEdit");
+  function removeClass() {
+    var inputs = document.querySelectorAll("input");
+   inputs.forEach(input => {
+         input.classList.remove("noEdit");
+    });
+ 
   }
   
   // Ajouter un écouteur d'évènements sur le bouton modifier :
   let pen = document.getElementById("pen"); 
-  pen.addEventListener("click", NotReadOnly, removeClass, false);
-
+  pen.addEventListener("click", notReadOnly, false);
+  pen.addEventListener("click", removeClass, false);

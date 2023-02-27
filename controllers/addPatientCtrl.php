@@ -36,11 +36,17 @@ try {
                 // j'ajoute le message d'erreur au tableau alert :
                 $alert['mail'] = "L'adresse email n'est pas valide.";
             } else {
-                // Si le mail est validé :
-                // je vérifie si le mail n'est pas déjà présent en base de données:
-                if ((empty($id)) && Patient::existsMail($mail)) {
-                    // si le mail existe j'ajoute le message d'erreur au tableau d'alert :
-                    $alert['mail'] = 'Mail déjà existant.';
+                // Si le mail est validé :  
+                // je vérifie si le mail n'est pas déjà présent en base de données et que le mail n'est pas déjà celui de l'id en cours d'affichage :
+                if (empty($id)) {
+                    if (patient::existsMail($mail)) {
+                        $alert['mail'] = 'Mail déjà existant.'; }
+                } else {
+                    $patient = Patient::get($id);
+                    if (Patient::existsMail($mail) && $mail != $patient->mail) {
+                        // si le mail existe j'ajoute le message d'erreur au tableau d'alert :
+                        $alert['mail'] = 'Mail déjà existant.';
+                    }
                 }
             }
         }
@@ -162,11 +168,14 @@ try {
         }
     }
     if (!empty($id)) {
-
-        $patient = Patient::get($id);
-    } // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
-
-
+        // j'utilise la méthode statique pour afficher le profil en fonction de l'id récupéré :
+        if ($patient = Patient::get($id) == false) {
+            include(__DIR__ . '/../controllers/error404Ctrl.php');
+            die;
+        } else {
+            $patient = Patient::get($id);
+        }
+    }
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
