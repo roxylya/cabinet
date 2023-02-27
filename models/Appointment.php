@@ -42,7 +42,7 @@ class Appointment
 
     public function setIdPatients(int $idPatients)
     {
-        $this->dateHour = $idPatients;
+        $this->idPatients = $idPatients;
     }
     public function getIdPatients(): int
     {
@@ -72,16 +72,16 @@ class Appointment
     }
 
 
-//     // Afficher tous les rendez-vous.
+    // Afficher tous les rendez-vous.
 
-//     public static function getAllAppointments(): array
-//     {
-//         $db = dbConnect();
-//         $sql = 'SELECT * FROM `appointments` ORDER BY `dateHour`;';
-//         $sth = $db->query($sql);
-//         $results = $sth->fetchAll();
-//         return $results;
-//     }
+    public static function getAllAppointments(): array
+    {
+        $db = dbConnect();
+        $sql = 'SELECT * FROM `appointments` ORDER BY `dateHour`;';
+        $sth = $db->query($sql);
+        $results = $sth->fetchAll();
+        return $results;
+    }
 
 
 

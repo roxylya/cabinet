@@ -4,8 +4,7 @@
         <div class="avertissement">Pour accéder aux informations passer en mode paysage.</div>
         <table>
             <tr class="titleCol">
-                <th>Date </th>
-                <th>Heure</th>
+                <th>Date/Heure </th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Téléphone</th>
@@ -14,8 +13,7 @@
             <?php foreach ($appointments as $appointment) { ?>
 
             <?= '<tr id="' . $appointment->id . '">
-                    <td>' . date('d-m-Y', strtotime($appointment->date)) . '</td>
-                    <td>' . date('d-m-Y', strtotime($appointment->hour)) . '</td>
+                    <td>' . $appointment->dateHour . '</td>
                     <td>' . $appointment->lastname . '</td>
                     <td>' . $appointment->firstname . '</td>
                     <td>' . $appointment->phone . '</td>

@@ -1,5 +1,33 @@
 <?php
+// on a besoin d'accéder à la db :
+require_once(__DIR__ . '/../models/database.php');
+
+// on a besoin d'accéder aux constantes :
+require_once(__DIR__ . '/../config/constants.php');
+
+// on accède à la classe :
+require_once(__DIR__ . '/../models/Patient.php');
+
+// on accède à la classe :
+require_once(__DIR__ . '/../models/Appointment.php');
+
+
+// // je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
+// $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+// je teste si mon code fonctionne :
+try {
+    // je récupère la liste des patients pour obtenir les noms et prénom dans le select :
+    $patients = Appointment::getAllAppointments();
+} catch (\Throwable $th) {
+    // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
+    $errorMessage = $th->getMessage();
+    include(__DIR__ . '/../views/error.php');
+    die;
+}
+
 
 include(__DIR__ . '/../views/templates/header.php');
 include(__DIR__ . '/../views/appointment/rdvList.php');
 include(__DIR__ . '/../views/templates/footer.php');
+
