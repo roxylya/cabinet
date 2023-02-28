@@ -5,7 +5,7 @@
             <p><?= date('d-m-Y h:i', strtotime($appointment->dateHour)) ?></p>
         </div>
         <div class="patient p-2 d-flex justify-content-between align-items-center">
-            <p>Nom :</p>
+            <p>Patient :</p>
             <p><?= $appointment->lastname . ' '. $appointment->firstname ?></p>
         </div>
         <div class="patient p-2 d-flex justify-content-between align-items-center">

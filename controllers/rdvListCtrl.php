@@ -9,8 +9,6 @@ require_once(__DIR__ . '/../config/constants.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 
 
-// // je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
-// $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
 // je teste si mon code fonctionne :
 try {

@@ -90,11 +90,24 @@ class Appointment
         $db = dbConnect();
         $sql = 'SELECT `id` FROM `patients` WHERE `patients`.`id` = :idPatient;';
         $sth = $db->prepare($sql);
-        $sth->execute([$idPatient]);
+        $sth->bindValue(':idPatient', $idPatient, PDO::PARAM_INT);
+        $sth->execute();
         $results = $sth->fetchAll();
 
         return (empty($results)) ? false : true;
     }
+
+    // vérifier si l'horaire est déjà pris dans la base de données :
+        public static function existsDateHour(string $dateHour)
+        {
+            $db = dbConnect();
+            $sql = 'SELECT `id` FROM `appointments` WHERE `appointments`.`dateHour` = ?;';
+            $sth = $db->prepare($sql);
+            $sth->execute([$dateHour]);
+            $results = $sth->fetchAll();
+    
+            return (empty($results)) ? false : true;
+        }
 
 
     // Afficher les informations d'un rendez-vous' sélectionné (loupe) en récupérant l'id:
@@ -118,22 +131,22 @@ class Appointment
         return $results;
     }
 
-    //     // // Update :
+        // // Update :
 
-    //     public function update($id)
-    //     {
-    //         //On se connecte à la BDD
-    //         $db = dbConnect();
+        public function update($idAppointment)
+        {
+            //On se connecte à la BDD
+            $db = dbConnect();
 
-    //         //On insère les données reçues   
-    //         //  on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-    //         $sth = $db->prepare("
-    //             UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients, WHERE `id`=:id;");
-    //         $sth->bindValue(':id', $id, PDO::PARAM_INT);
-    //         $sth->bindValue(':dateHour', $this->dateHour);
-    //         $sth->bindValue(':idPatients', $this->idPatients);
+            // On insère les données reçues   
+            // On note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
+            $sth = $db->prepare("
+                UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients, WHERE `appointment`.`id`=:idAppointment;");
+            $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
+            $sth->bindValue(':dateHour', $this->dateHour);
+            $sth->bindValue(':idPatients', $this->idPatients);
 
 
-    //         return $sth->execute();
-    //     }
+            return $sth->execute();
+        }
 }

@@ -18,7 +18,7 @@
                     <td>' . $appointment->firstname . '</td>
                     <td>' . $appointment->phone . '</td>
                     <td class="actions">
-                        <a href="/controllers/rdvCtrl.php?idAppointment=' . $appointment->idAppointment .
+                        <a href="/controllers/addRdvCtrl.php?idAppointment=' . $appointment->idAppointment .
                     '"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
                     </td>
                 </tr>';

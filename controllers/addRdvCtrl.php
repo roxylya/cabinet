@@ -40,8 +40,7 @@ try {
             $alert['idPatient'] = 'Veuillez sélectionner un patient dans la liste.';
         } else {
             // je vérifie si l'idPatient existe dans la base de données comme id de la table patient
-            $patient = Patient::existsId($idPatient);
-            if (!$patient = Patient::existsId($idPatient)) {
+            if (!Patient::existsId($idPatient)) {
                 // si le patient ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
                 $alert['idPatient'] = 'Patient inexistant.';
             }
@@ -65,9 +64,6 @@ try {
                 if ($dateAppointment > date('Y-m-d', strtotime('+1 year')) || $dateAppointment < date('Y-m-d')) {
                     $alert['dateAppointment'] = 'La date du rendez-vous doit être comprise entre aujourd\'hui et an+1.';
                 }
-                // if ($dateAppointment = date('') ) {
-                //     $alert['dateAppointment'] = 'Le cabinet est fermé le dimanche.';
-                // }
             }
         }
 
@@ -88,6 +84,7 @@ try {
             }
         }
 
+
         // Nettoyer et valider les minutes :
 
         // enlève les espaces, et filtre l'heure récupérée en post:
@@ -105,12 +102,19 @@ try {
             }
         }
 
+
+        // Vérifier que le rdv n'est pas déjà réservé :
+            $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut;
+            if (Appointment::existsDateHour($dateHour)) {
+                $alert['dateAppointment'] = 'Ce rendez-vous est déjà pris.';
+            }
+
+
         // si le tableau alert est vide :
         if (empty($alert)) {
 
             // si l'id n'est pas récupéré dans le GET :
             if (empty($idAppointment)) {
-                $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut;
                 $idPatient = intval(filter_input(INPUT_POST, 'idPatient', FILTER_SANITIZE_NUMBER_INT));
                 // je crée un nouveau élément de la classe Appointment:
                 $appointment = new Appointment();
@@ -127,19 +131,30 @@ try {
                 $hour = '';
                 $minut = '';
             }
-            // else {
-            //     // je crée un nouveau élément de la classe Appointment:
-            //     $appointment = new Appointment();
-            //     // je lui donne les valeurs récupérées, nettoyées et validées :
-            //     $appointment->setDateHour($dateHour);
-            //     $appointment->setIdPatients($idPatients);
-            //     // Ajouter l'enregistrement du nouveau RDV à la base de données :
-            //     $appointment->update($id);
-            //     // message de confirmation de l'ajout du RDV à la base de données :
-            //     $messageOk = 'Les données du RDV ont été modifiées.';
-            // }
+            else {
+                // je crée un nouveau élément de la classe Appointment:
+                $appointment = new Appointment();
+                // je lui donne les valeurs récupérées, nettoyées et validées :
+                $appointment->setDateHour($dateHour);
+                $appointment->setIdPatients($idPatient);
+                // Ajouter l'enregistrement du nouveau RDV à la base de données :
+                $appointment->update($idAppointment);
+                // message de confirmation de l'ajout du RDV à la base de données :
+                $messageOk = 'Les données du RDV ont été modifiées.';
+            }
         }
     }
+
+      if (!empty($idAppointment)) {
+          // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
+          if ($appointment = Appointment::get($idAppointment) == false) {
+              include(__DIR__ . '/../controllers/error404Ctrl.php');
+              die;
+          } else {
+              $appointment = Appointment::get($idAppointment);
+              
+          }
+      }
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
@@ -153,7 +168,7 @@ try {
 
 include(__DIR__ . '/../views/templates/header.php');
 
-if (empty($id)) {
+if (empty($idAppointment)) {
     include(__DIR__ . '/../views/appointment/addRdv.php');
 } else {
     include(__DIR__ . '/../views/appointment/rdv.php');
