@@ -78,7 +78,7 @@ class Appointment
     public static function getAllAppointments(): array
     {
         $db = dbConnect();
-        $sql = 'SELECT `appointments`.`id`, `appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`= `patients`.`id` ORDER BY `dateHour`;';
+        $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`= `patients`.`id` ORDER BY `dateHour`;';
         $sth = $db->query($sql);
         $results = $sth->fetchAll();
         return $results;
