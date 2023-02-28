@@ -30,14 +30,14 @@
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
             <div class="p-3">
-                <label for="idPatients">Patient : </label>
-                <select class="patient" name="idPatients" id="idPatients">
+                <label for="idPatient">Patient : </label>
+                <select class="patient" name="idPatient" id="idPatient">
                     <?php foreach ($patients as $patient) {
                         echo '<option value="' . $patient->id . '">' . $patient->lastname . ' ' . $patient->firstname . '</option>
                     ';
                     } ?>
                 </select>
-                <p class="error"><?= $alert['lastname'] ?? '' ?></p>
+                <p class="error"><?= $alert['idPatient'] ?? '' ?></p>
             </div>
             <div class="btnEnvoyer text-center">
                 <input type="submit" value="Envoyer">

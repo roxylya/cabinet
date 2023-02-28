@@ -12,13 +12,13 @@
             </tr>
             <?php foreach ($appointments as $appointment) { ?>
 
-            <?= '<tr id="' . $appointment->id . '">
+            <?= '<tr id="' . $appointment->idAppointment . '">
                     <td>' . $appointment->dateHour . '</td>
                     <td>' . $appointment->lastname . '</td>
                     <td>' . $appointment->firstname . '</td>
                     <td>' . $appointment->phone . '</td>
                     <td class="actions">
-                        <a href="/controllers/addPatientCtrl.php?id=' . $appointment->id .
+                        <a href="/controllers/rdvCtrl.php?id=' . $appointment->idAppointment .
                     '"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
                     </td>
                 </tr>';

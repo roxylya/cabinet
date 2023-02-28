@@ -143,18 +143,6 @@ class Patient
             return (empty($results)) ? false : true;
         }
 
-        // vérifier si l'id existe dans la base de données :
-            public static function existsIdPatients(int $idPatients)
-            {
-                $db = dbConnect();
-                $sql = 'SELECT `id` FROM `patients` WHERE `id` = :idPatients;';
-                $sth = $db->prepare($sql);
-                $sth->execute([$idPatients]);
-                $results = $sth->fetchAll();
-        
-                return (empty($results)) ? false : true;
-            }
-
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
     public static function get($id): object | bool

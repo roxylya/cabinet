@@ -16,7 +16,7 @@ require_once(__DIR__ . '/../models/Appointment.php');
 $alert = [];
 
 // je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
-$id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+$idAppointment = intval(filter_input(INPUT_GET, 'idAppointment', FILTER_SANITIZE_NUMBER_INT));
 
 
 
@@ -32,21 +32,20 @@ try {
         // Nettoyer et valider le patient :
 
         // filtre le nom récupéré en post:
-        $idPatients = filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_NUMBER_INT);
+        $idPatient = filter_input(INPUT_POST, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
 
         // si pas de patient entré :
-        if (empty($idPatients)) {
+        if (empty($idPatient)) {
             // j'ajoute le message d'erreur au tableau alert :
-            $alert['idPatients'] = 'Veuillez sélectionner un patient dans la liste.';
+            $alert['idPatient'] = 'Veuillez sélectionner un patient dans la liste.';
+        } else {
+            // je vérifie si l'idPatient existe dans la base de données comme id de la table patient
+            $patient = Patient::existsId($idPatient);
+            if (!$patient = Patient::existsId($idPatient)) {
+                // si le patient ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
+                $alert['idPatient'] = 'Patient inexistant.';
+            }
         }
-        // else {
-        //     // je vérifie si l'idPatients existe dans la base de données comme id de la table patient
-        //     // $patient=Patient::existsIdPatients($idPatients);
-        //     // if (!$patient=Patient::existsIdPatients($idPatients)){
-        //     //     // si le patient ne correspond pas, j'ajoute le message d'erreur au tableau d'alert :
-        //     //     $alert['idPatients'] = 'Patient inexistant.';
-        //     // }
-        // }
 
         // Nettoyer et valider la date :
 
@@ -110,16 +109,16 @@ try {
         if (empty($alert)) {
 
             // si l'id n'est pas récupéré dans le GET :
-            if (empty($id)) {
+            if (empty($idAppointment)) {
                 $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut;
-                $idPatients = intval(filter_input(INPUT_POST, 'idPatients', FILTER_SANITIZE_NUMBER_INT));
+                $idPatient = intval(filter_input(INPUT_POST, 'idPatient', FILTER_SANITIZE_NUMBER_INT));
                 // je crée un nouveau élément de la classe Appointment:
                 $appointment = new Appointment();
                 // je lui donne les valeurs récupérées, nettoyées et validées :
                 $appointment->setDateHour($dateHour);
-                $appointment->setIdPatients($idPatients);
+                $appointment->setIdPatients($idPatient);
                 // Ajouter l'enregistrement du nouveau rdv à la base de données :
-                $appointment->addAppointment($idPatients);
+                $appointment->addAppointment($idPatient);
                 // message de confirmation de l'ajout du rdv à la base de données :
                 $messageOk = 'Nouveau RDV enregistré.';
                 // je réinitialise l'affichage :
@@ -141,11 +140,6 @@ try {
             // }
         }
     }
-    // if (!empty($id)) {
-    //     // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
-    //     $appointment = Appointment::get($id);
-    // }
-
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
