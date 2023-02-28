@@ -99,17 +99,17 @@ class Appointment
 
     // Afficher les informations d'un rendez-vous' sélectionné (loupe) en récupérant l'id:
 
-    public static function get($id): object
+    public static function get($idAppointment): object
     {
         // je me connecte à la base de données
         $db = dbConnect();
         // je formule ma requête affiche les éléments souhaités des tables appointments et patients concernant l'id récupéré
         // je mets des as pour différencier mes id des différentes tables : à voir
-        $sql = 'SELECT `appointments`.`id`, `appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` WHERE `appointments`.`id`=:id ORDER BY `dateHour`';
+        $sql = 'SELECT `appointments`.`id`, `appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` WHERE `appointments`.`id`=:idAppointment ORDER BY `dateHour`';
         // on prépare la requête
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
-        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
         // on exécute la requête
         $sth->execute();
         // On stocke le résultat dans un objet puisque paramétrage effectué:
