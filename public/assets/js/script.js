@@ -16,13 +16,30 @@ function notReadOnly() {
 
   function removeClass() {
     var inputs = document.querySelectorAll("input");
+    var selects = document.querySelectorAll("select");
    inputs.forEach(input => {
          input.classList.remove("noEdit");
     });
+    selects.forEach(select => {
+      select.classList.remove("noEdit");
+ });
  
+  }
+
+  function notDisabled(){
+    let dateAppointment = document.getElementById("dateAppointment");
+    let hourSelect = document.getElementById("hour-select");
+    let minutSelect = document.getElementById("minut-select");
+    let idPatient = document.getElementById("idPatient");
+
+    dateAppointment.readOnly = false;
+    hourSelect.disabled = false;
+    minutSelect.disabled = false;
+    idPatient.disabled = false;
   }
   
   // Ajouter un écouteur d'évènements sur le bouton modifier :
   let pen = document.getElementById("pen"); 
   pen.addEventListener("click", notReadOnly, false);
   pen.addEventListener("click", removeClass, false);
+  pen.addEventListener("click", notDisabled, false);
