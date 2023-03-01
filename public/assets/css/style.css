@@ -85,7 +85,7 @@ option  {
 .noEdit {
     background-color: #ddecf1;
     border: none;
-    text-align: center;
+  
 }
 
 .form {
@@ -257,11 +257,6 @@ td {
     border: thick double #f99e49;
     background-color: #b4d5e072;
     width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
 }
 
 .pen {

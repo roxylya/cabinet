@@ -3,8 +3,9 @@
 require_once(__DIR__ . '/../models/database.php');
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
-
+// on a besoin du models :
 require_once(__DIR__ . '/../models/Patient.php');
+
 
 // je crée un tableau où se trouveront tous les messages d'erreur :
 $alert = [];
@@ -174,6 +175,7 @@ try {
             die;
         } else {
             $patient = Patient::get($id);
+            $patientRdv = Patient::getApp($id);
         }
     }
 } catch (\Throwable $th) {
