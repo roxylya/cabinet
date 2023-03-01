@@ -118,7 +118,11 @@ class Appointment
         $db = dbConnect();
         // je formule ma requête affiche les éléments souhaités des tables appointments et patients concernant l'id récupéré
         // je mets des as pour différencier mes id des différentes tables : à voir
-        $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`idPatients`,`appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` WHERE `appointments`.`id`=:idAppointment ORDER BY `dateHour`';
+        $sql = 'SELECT `appointments`.`id` AS `idAppointment`, `appointments`.`idPatients`,`appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  
+        FROM `appointments` 
+        LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` 
+        WHERE `appointments`.`id`=:idAppointment 
+        ORDER BY `dateHour`';
         // on prépare la requête
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
@@ -141,7 +145,7 @@ class Appointment
             // On insère les données reçues   
             // On note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
             $sth = $db->prepare("
-                UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients, WHERE `appointment`.`id`=:idAppointment;");
+                UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients WHERE `appointments`.`id`=:idAppointment;");
             $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
             $sth->bindValue(':dateHour', $this->dateHour);
             $sth->bindValue(':idPatients', $this->idPatients);

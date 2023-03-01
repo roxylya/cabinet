@@ -12,16 +12,29 @@ require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 
 
-// je crée un tableau où se trouveront tous les messages d'erreur :
-$alert = [];
-
-// je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
-$idAppointment = intval(filter_input(INPUT_GET, 'idAppointment', FILTER_SANITIZE_NUMBER_INT));
-
 
 
 // je teste si mon code fonctionne :
 try {
+
+    // je crée un tableau où se trouveront tous les messages d'erreur :
+    $alert = [];
+
+    // je récupère la valeur de l'ID avec GET et je le nettoie, je le récupère dans une variable une fois propre :
+    $idAppointment = intval(filter_input(INPUT_GET, 'idAppointment', FILTER_SANITIZE_NUMBER_INT));
+
+
+
+    if (!empty($idAppointment)) {
+        $appointment = Appointment::get($idAppointment);
+        // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
+        if (!$appointment) {
+            include(__DIR__ . '/../controllers/error404Ctrl.php');
+            die;
+        }
+    }
+
+
     // je récupère la liste des patients pour obtenir les noms et prénom dans le select :
     $patients = Patient::getAll();
 
@@ -104,10 +117,21 @@ try {
 
 
         // Vérifier que le rdv n'est pas déjà réservé :
+        if (empty($idAppointment)) {
             $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut;
+
             if (Appointment::existsDateHour($dateHour)) {
                 $alert['dateAppointment'] = 'Ce rendez-vous est déjà pris.';
             }
+        } else {
+            $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut . ':00';
+            if (Appointment::existsDateHour($dateHour) && $dateHour != $appointment->dateHour) {
+                $alert['dateAppointment'] = 'Ce rendez-vous est déjà pris 2.';
+            }
+        }
+
+
+
 
 
         // si le tableau alert est vide :
@@ -130,8 +154,7 @@ try {
                 $patient = '';
                 $hour = '';
                 $minut = '';
-            }
-            else {
+            } else {
                 // je crée un nouveau élément de la classe Appointment:
                 $appointment = new Appointment();
                 // je lui donne les valeurs récupérées, nettoyées et validées :
@@ -144,17 +167,6 @@ try {
             }
         }
     }
-
-      if (!empty($idAppointment)) {
-          // j'utilise la méthode statique pour afficher le rdv en fonction de l'id récupéré :
-          if ($appointment = Appointment::get($idAppointment) == false) {
-              include(__DIR__ . '/../controllers/error404Ctrl.php');
-              die;
-          } else {
-              $appointment = Appointment::get($idAppointment);
-              
-          }
-      }
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
