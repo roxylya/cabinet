@@ -1,4 +1,4 @@
-<main class="patientPatient d-flex justify-content-center align-items-center py-5">
+<main class="patientPatient d-flex flex-column justify-content-center align-items-center py-5">
     <p class="messageOk"><?= $messageOk ?? '' ?></p>
     <form method="post" class="form p-3">
         <div class="lastname ps-2 pb-2 d-flex justify-content-between align-items-center">
@@ -33,15 +33,14 @@
             </div>
         </div>
     </form>
-    <div class="rdvPatient">
+    <div class="rdvPatient mt-5">
         <table>
             <tr class="titleCol">
                 <th>RDV</th>
             </tr>
             <tr>
-                <?php foreach ($patientRdv as $appointment) {?>
-                <td><?= $appointment->dateHour;
-                  ?>
+                <?php foreach ($patientRdv as $patientRdv->dateHour) {?>
+                <td><?= date('d-m-Y H:i',strtotime($patientRdv->dateHour));?>
                 </td><?php }?>
             </tr>
         </table>

@@ -13,7 +13,7 @@
             <?php foreach ($appointments as $appointment) { ?>
 
             <?= '<tr id="' . $appointment->idAppointment . '">
-                    <td>' . $appointment->dateHour . '</td>
+                    <td>' . date('d-m-Y H:i',strtotime($appointment->dateHour)) . '</td>
                     <td>' . $appointment->lastname . '</td>
                     <td>' . $appointment->firstname . '</td>
                     <td>' . $appointment->phone . '</td>
