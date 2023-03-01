@@ -217,4 +217,25 @@ class Patient
         // que l'on retourne en sortie de méthode
         return $results;
     }
+
+      // Delete un patient :
+
+      public static function delete($id)
+      {
+          //On se connecte à la BDD
+          $db = dbConnect();
+          // je mets des as pour différencier mes id des différentes tables :
+          $sql = 'DELETE FROM `patients` 
+          WHERE `patients`.`id`=:id ;';
+          // on prépare la requête
+          $sth = $db->prepare($sql);
+          // On affecte les valeurs au marqueur nominatif :
+          $sth->bindValue(':id', $id, PDO::PARAM_INT);
+          // on exécute la requête
+          $sth->execute();
+          // on vérifie si l'ajout a bien été effectué :
+          $nbResults = $sth->rowCount();
+          // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
+          return ($nbResults > 0) ? true : false;
+      }
 }

@@ -1,5 +1,6 @@
 <main>
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
+    <h2 class="text-center pt-5">Rendez-vous</h2> 
         <p class="messageOk p-2"><?= $messageOk ?? '' ?></p>
         <form method="post" class="form p-4">
             <div class="date p-3">
@@ -35,10 +36,7 @@
                 <select class="patient noEdit" name="idPatient" id="idPatient" disabled>
                     <?php foreach ($patients as $patient) { 
                         $patientId= $idPatient ?? $patient->id;?>
-
-                        <!-- <option value="idpatient" selected><?=$patient->lastname?> <?$patient->firstname?></option> -->
-
-                        <?= '<option value="' . $patient->id . '" '. (($patientId == $appointment->idPatients) ? 'selected' : '') .'>' . $patient->lastname . ' ' . $patient->firstname . '</option>'; ?>
+                        <?= '<option value="' . $patient->id . '" '. (($patientId == $appointment->idPatients) ? 'selected' : '') .'>' . (($patient->lastname . ' ' . $patient->firstname)  ??  ($lastname . ' ' . $firstname)) .' </option>'; ?>
                     <?php } ?>
                 </select>
                 <p class="error"><?= $alert['idPatient'] ?? '' ?></p>

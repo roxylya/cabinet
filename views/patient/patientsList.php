@@ -1,5 +1,6 @@
 <main>
     <h2 class="text-center p-5">Liste des patients</h2>
+    <p class="text-center p-3"><?= $message ?? '' ?></p>
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
         <div class="avertissement">Pour accéder aux informations passer en mode paysage.</div>
         <table>
@@ -21,12 +22,9 @@
                     <td>' . $patient->mail . '</td>
                     <td class="actions">
                         <a href="/controllers/addPatientCtrl.php?id=' . $patient->id .
-                    // '&lastname=' . $patient->lastname .
-                    // '&firstname=' . $patient->firstname .
-                    // '&birthdate=' . date('d-m-Y', strtotime($patient->birthdate)) .
-                    // '&phone=' . $patient->phone .
-                    // '&mail=' . $patient->mail . 
                     '"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
+                    <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=' . $patient->id .
+                    '"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
                     </td>
                 </tr>';
             }

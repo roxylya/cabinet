@@ -39,9 +39,15 @@
                 <th>RDV</th>
             </tr>
             <tr>
-                <?php foreach ($patientRdv as $patientRdv->dateHour) {?>
-                <td><?= date('d-m-Y H:i',strtotime($patientRdv->dateHour));?>
-                </td><?php }?>
+                <?php if ($patientRdv == false) {
+                    $noRdv = 'Aucun rdv'; ?>
+                    <td><?= $noRdv; ?>
+                    </td>
+                    <?php } else {
+                    foreach ($patientRdv as $patientRdv->dateHour) { ?>
+                        <td><?= date('d-m-Y H:i', strtotime($patientRdv->dateHour)); ?>
+                        </td><?php }
+                        } ?>
             </tr>
         </table>
     </div>
