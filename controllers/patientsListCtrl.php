@@ -9,13 +9,8 @@ require_once(__DIR__ . '/../models/Patient.php');
 
 try {
     // Nettoyage et validation du formulaire reçu en post :
-    if (isset($_GET['submitResearch'])&& $_GET['submitResearch'] == "Rechercher") {
-        $research = trim(filter_input(INPUT_POST, 'research', FILTER_SANITIZE_SPECIAL_CHARS));
-        
- 
-    }
-    $patients = Patient::getAll();
-    
+    $research = trim((string)filter_input(INPUT_GET, 'research', FILTER_SANITIZE_SPECIAL_CHARS));
+    $patients = Patient::getAll($research);
 } catch (\Throwable $th) {
     $errorMessage = $th->getMessage();
     include(__DIR__ . '/../views/templates/header.php');
