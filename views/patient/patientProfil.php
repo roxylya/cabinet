@@ -39,7 +39,7 @@
                 <th>RDV</th>
             </tr>
 
-            <?php if ($patientRdvs == false) {
+            <?php if (!$patientRdvs) {
                 $noRdv = 'Aucun rdv'; ?>
                 <tr>
                     <td><?= $noRdv; ?>

@@ -284,7 +284,14 @@ td {
 }
 
 
-
+/* research */
+input[type="search"]{
+    width:50%;
+    background-color: #b4d5e072;
+}
+.research{
+    height: 3rem;
+}
 
 /* footer */
 footer {

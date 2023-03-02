@@ -98,10 +98,10 @@ class Patient
         $sth->execute();
 
         // on vérifie si l'ajout a bien été effectué :
-        $nbResults=$sth->rowCount();
+        $nbResults = $sth->rowCount();
 
         // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
-        return($nbResults > 0) ? true : false ;
+        return ($nbResults > 0) ? true : false;
     }
 
 
@@ -116,7 +116,7 @@ class Patient
         return $results;
     }
 
- 
+
 
     // vérifier si le mail existe déjà dans la base de données :
     public static function existsMail(string $mail)
@@ -131,17 +131,17 @@ class Patient
     }
 
 
-     // vérifier si l'id existe dans la base de données :
-        public static function existsId(int $id)
-        {
-            $db = dbConnect();
-            $sql = 'SELECT `id` FROM `patients` WHERE `id` = ?;';
-            $sth = $db->prepare($sql);
-            $sth->execute([$id]);
-            $results = $sth->fetchAll();
-    
-            return (empty($results)) ? false : true;
-        }
+    // vérifier si l'id existe dans la base de données :
+    public static function existsId(int $id)
+    {
+        $db = dbConnect();
+        $sql = 'SELECT `id` FROM `patients` WHERE `id` = ?;';
+        $sth = $db->prepare($sql);
+        $sth->execute([$id]);
+        $results = $sth->fetchAll();
+
+        return (empty($results)) ? false : true;
+    }
 
     // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
 
@@ -187,11 +187,11 @@ class Patient
         $sth->bindValue(':phone', $this->phone);
         $sth->bindValue(':mail', $this->mail);
         $sth->execute();
-       // on vérifie si l'ajout a bien été effectué :
-        $nbResults=$sth->rowCount();
+        // on vérifie si l'ajout a bien été effectué :
+        $nbResults = $sth->rowCount();
 
         // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
-        return($nbResults > 0) ? true : false ;
+        return ($nbResults > 0) ? true : false;
     }
 
     public static function getApp($id): array
@@ -218,25 +218,26 @@ class Patient
         return $results;
     }
 
-      // Delete un patient :
+    // Delete un patient :
 
-      public static function delete($id)
-      {
-          //On se connecte à la BDD
-          $db = dbConnect();
-          // je mets des as pour différencier mes id des différentes tables :
-          $sql = 'DELETE FROM `patients` 
+    public static function delete($id)
+    {
+        //On se connecte à la BDD
+        $db = dbConnect();
+        // je mets des as pour différencier mes id des différentes tables :
+        $sql = 'DELETE FROM `patients` 
           WHERE `patients`.`id`=:id ;';
 
-          // on prépare la requête
-          $sth = $db->prepare($sql);
-          // On affecte les valeurs au marqueur nominatif :
-          $sth->bindValue(':id', $id, PDO::PARAM_INT);
-          // on exécute la requête
-          $sth->execute();
-          // on vérifie si l'ajout a bien été effectué :
-          $nbResults = $sth->rowCount();
-          // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
-          return ($nbResults > 0) ? true : false;
-      }
+        // on prépare la requête
+        $sth = $db->prepare($sql);
+        // On affecte les valeurs au marqueur nominatif :
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        // on exécute la requête
+        $sth->execute();
+        // on vérifie si l'ajout a bien été effectué :
+        $nbResults = $sth->rowCount();
+        // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
+        return ($nbResults > 0) ? true : false;
+    }
+
 }

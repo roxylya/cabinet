@@ -1,7 +1,11 @@
-<main>
-    <h2 class="text-center p-5">Liste des patients</h2>
-    <p class="text-center p-3"><?= $message ?? '' ?></p>
-    <div class="d-flex flex-column justify-content-center align-items-center mb-5">
+<main class="py-5">
+    <h2 class="text-center">Liste des patients</h2>
+    <p class="text-center py-1"><?= $message ?? '' ?></p>
+    <form action="patientsListCtrl.php" class="text-center py-1" method="get">
+        <input type="search" name="research" class="research" value="<?= $research ?? ''?>">
+        <input type="submit" name="submitResearch" class="research" value="Rechercher">
+    </form>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
         <div class="avertissement">Pour accéder aux informations passer en mode paysage.</div>
         <table>
             <tr class="titleCol">
@@ -12,7 +16,8 @@
                 <th>Email</th>
                 <th>Actions</th>
             </tr>
-            <?php foreach ($patients as $patient) { ?>
+            <?php
+                foreach ($patients as $patient) { ?>
 
             <?= '<tr id="' . $patient->id . '">
                     <td>' . $patient->lastname . '</td>
