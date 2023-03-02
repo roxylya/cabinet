@@ -112,7 +112,7 @@ class Appointment
 
     // Afficher les informations d'un rendez-vous' sélectionné (loupe) en récupérant l'id:
 
-    public static function get($idAppointment): object
+    public static function get($idAppointment): object | bool
     {
         // je me connecte à la base de données
         $db = dbConnect();
@@ -120,9 +120,8 @@ class Appointment
         // je mets des as pour différencier mes id des différentes tables : à voir
         $sql = 'SELECT `appointments`.`id` AS `idAppointment`, `appointments`.`idPatients`,`appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  
         FROM `appointments` 
-        LEFT JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` 
-        WHERE `appointments`.`id`=:idAppointment 
-        ORDER BY `dateHour`';
+        JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` 
+        WHERE `appointments`.`id`=:idAppointment;';
         // on prépare la requête
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :

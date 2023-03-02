@@ -227,6 +227,7 @@ class Patient
           // je mets des as pour différencier mes id des différentes tables :
           $sql = 'DELETE FROM `patients` 
           WHERE `patients`.`id`=:id ;';
+
           // on prépare la requête
           $sth = $db->prepare($sql);
           // On affecte les valeurs au marqueur nominatif :

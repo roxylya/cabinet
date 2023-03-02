@@ -13,21 +13,19 @@
                 <th>Actions</th>
             </tr>
             <?php foreach ($appointments as $appointment) { ?>
-
-            <?= '<tr id="' . $appointment->idAppointment . '">
-                    <td>' . date('d-m-Y H:i',strtotime($appointment->dateHour)) . '</td>
-                    <td>' . $appointment->lastname . '</td>
-                    <td>' . $appointment->firstname . '</td>
-                    <td>' . $appointment->phone . '</td>
+                <tr id="apt<?=  $appointment->idAppointment ?>">
+                    <td><?= date('d-m-Y H:i',strtotime($appointment->dateHour)) ?></td>
+                    <td><?= $appointment->lastname ?></td>
+                    <td><?= $appointment->firstname ?></td>
+                    <td><?= $appointment->phone ?></td>
                     <td class="actions">
-                        <a href="/controllers/addRdvCtrl.php?idAppointment=' . $appointment->idAppointment .
-                    '"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
-                    <a class="ps-5" href="/controllers/deleteRdvCtrl.php?idAppointment=' . $appointment->idAppointment .
-                    '"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <a href="/controllers/addRdvCtrl.php?idAppointment=<?=$appointment->idAppointment ?>"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
+                    <a class="ps-5" href="/controllers/deleteRdvCtrl.php?idAppointment=<?=$appointment->idAppointment ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
                     </td>
-                </tr>';
-            }
+                </tr>
+            <?php ;}
             ?>
         </table>
     </div>
 </main>
+
