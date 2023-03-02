@@ -38,17 +38,18 @@
             <tr class="titleCol">
                 <th>RDV</th>
             </tr>
-            <tr>
-                <?php if ($patientRdv == false) {
-                    $noRdv = 'Aucun rdv'; ?>
+
+            <?php if ($patientRdvs == false) {
+                $noRdv = 'Aucun rdv'; ?>
+                <tr>
                     <td><?= $noRdv; ?>
                     </td>
                     <?php } else {
-                    foreach ($patientRdv as $patientRdv->dateHour) { ?>
-                        <td><?= date('d-m-Y H:i', strtotime($patientRdv->dateHour)); ?>
-                        </td><?php }
-                        } ?>
-            </tr>
+                    foreach ($patientRdvs as $patientRdv) { ?>
+                        <td><?= date('d-m-Y H:i', strtotime($patientRdv->dateHour)) ?></td>
+                </tr>
+        <?php }
+                } ?>
         </table>
     </div>
 </main>

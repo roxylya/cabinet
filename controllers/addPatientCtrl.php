@@ -175,7 +175,7 @@ try {
             die;
         } else {
             $patient = Patient::get($id);
-            $patientRdv = Patient::getApp($id);       
+            $patientRdvs = Patient::getApp($id);       
         }
     }
 } catch (\Throwable $th) {

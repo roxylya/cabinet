@@ -194,7 +194,7 @@ class Patient
         return($nbResults > 0) ? true : false ;
     }
 
-    public static function getApp($id): object | bool
+    public static function getApp($id): array
     {
         // je me connecte à la base de données
         $db = dbConnect();
@@ -212,7 +212,7 @@ class Patient
         $sth->execute();
 
         // On stocke le résultat dans un objet puisque paramétrage effectué:
-        $results = $sth->fetch();
+        $results = $sth->fetchAll();
 
         // que l'on retourne en sortie de méthode
         return $results;
