@@ -1,10 +1,8 @@
 <?php
 // on a besoin d'accéder à la db :
 require_once(__DIR__ . '/../models/database.php');
-
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
-
 // on accède à la classe :
 require_once(__DIR__ . '/../models/Appointment.php');
 

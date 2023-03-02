@@ -16,12 +16,12 @@ try {
     $idAppointment = intval(filter_input(INPUT_GET, 'idAppointment', FILTER_SANITIZE_NUMBER_INT));
     $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
     $patient = Patient::delete($id);
-    if ($appointment) {
+    if ($patient) {
         $message = 'Le patient a été supprimé.';
     } else {
         $message = 'Le patient n\'existe pas.';   
     }
-    header('location: /controllers/patientListCtrl.php?message=' . $message);
+    header('location: /controllers/patientsListCtrl.php?message=' . $message);
         die;
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
