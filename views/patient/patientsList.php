@@ -1,9 +1,8 @@
-
 <main class="py-5">
     <h2 class="text-center">Liste des patients</h2>
     <p class="text-center py-1"><?= $message ?? '' ?></p>
     <form action="patientsListCtrl.php" class="text-center py-1" method="get">
-        <input type="search" name="research" class="research" value="<?= $research ?? ''?>">
+        <input type="search" name="research" class="research" value="<?= $research ?? '' ?>">
         <input type="submit" name="submitResearch" class="research" value="Rechercher">
     </form>
     <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
@@ -18,7 +17,7 @@
                 <th>Actions</th>
             </tr>
             <?php
-                foreach ($patients as $patient) { ?>
+            foreach ($patients as $patient) { ?>
 
             <?= '<tr id="' . $patient->id . '">
                     <td>' . $patient->lastname . '</td>
@@ -36,5 +35,23 @@
             }
             ?>
         </table>
+        <!-- pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </main>

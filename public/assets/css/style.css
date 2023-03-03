@@ -22,8 +22,9 @@ header {
 }
 
 /* main */
-main{
-margin: auto;
+
+main {
+    margin: auto;
 }
 
 h1 {
@@ -33,6 +34,12 @@ h1 {
 h2 {
     font-size: 1.7rem;
 }
+
+p {
+    text-align: justify;
+}
+
+/* home */
 
 .exos {
     border-style: double;
@@ -49,11 +56,8 @@ h2 {
     }
 }
 
-p {
-    text-align: justify;
-}
 
-/* ajout-patient form */
+/* patient form */
 
 label {
     display: block;
@@ -68,27 +72,27 @@ input {
     text-align: center;
 }
 
-.patient{
+.patient {
     width: 20rem;
     border-radius: 1rem;
     text-align: center;
 }
 
 
-select  {
+select {
     width: 9rem;
     border-radius: 1rem;
     text-align: center;
 }
 
-option  {
+option {
     text-align: center;
 }
 
 .noEdit {
     background-color: #ddecf1;
     border: none;
-  
+
 }
 
 .form {
@@ -158,10 +162,13 @@ td {
     text-shadow: 0.1em 0.1em 0.2em #000000;
 }
 
-.bgError404{
+.bgError404 {
     background-color: #b4d5e072;
     height: 75vh;
 }
+
+/* responsive 
+je désactive l'affichage du tableau si mobile tenu en portrait et l'affiche en mode paysage */
 
 @media only screen and (orientation:portrait) {
     table {
@@ -180,6 +187,9 @@ td {
     }
 }
 
+/* Je redimensionne les affichages pour la version mobile : */
+
+/* des formulaires */
 @media (max-width : 600px) {
     .formProfil {
         border-radius: 1rem;
@@ -192,17 +202,6 @@ td {
         justify-content: center;
     }
 
-    .error404 {
-        font-size: 5rem;
-        color: #f99e49;
-        text-shadow: 0.1em 0.1em 0.2em #000000;
-    }
-    
-    .bgError404{
-        background-color: #b4d5e072;
-        height: 75vh;
-    }
-
     .pen {
         background-color: rgba(47, 79, 79, 0.164);
     }
@@ -211,6 +210,36 @@ td {
         width: 90%;
     }
 
+    label {
+        text-align: center;
+        padding-bottom: 0.5rem;
+    }
+
+    input {
+        width: 15rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+
+    select {
+        width: 7rem;
+        border-radius: 1rem;
+        text-align: center;
+    }
+
+    /* de la page erreur404 */
+    .error404 {
+        font-size: 5rem;
+        color: #f99e49;
+        text-shadow: 0.1em 0.1em 0.2em #000000;
+    }
+
+    .bgError404 {
+        background-color: #b4d5e072;
+        height: 75vh;
+    }
+
+    /* des tableaux */
     table {
         width: 98%;
     }
@@ -233,25 +262,7 @@ td {
         text-align: center;
         background-color: #ddecf1;
     }
-
-    label {
-        text-align: center;
-        padding-bottom: 0.5rem;
-    }
-
-    input {
-        width: 15rem;
-        border-radius: 1rem;
-        text-align: center;
-    }
-    select {
-        width: 7rem;
-        border-radius: 1rem;
-        text-align: center;
-    }
 }
-
-
 
 /* profil Patient */
 
@@ -271,27 +282,30 @@ td {
     width: 12rem;
     border-radius: 1rem;
     border: outset 2px black;
-
 }
 
 .btnPen:hover {
     transform: translateY(3px);
 }
 
-
 .propriety {
     font-weight: bolder;
 }
 
 
-/* research */
-input[type="search"]{
-    width:50%;
+/* research dans la liste des patients*/
+input[type="search"] {
+    width: 50%;
     background-color: #b4d5e072;
 }
-.research{
+
+.research {
     height: 3rem;
 }
+
+/* pagination */
+
+
 
 /* footer */
 footer {
