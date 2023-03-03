@@ -75,11 +75,33 @@ class Appointment
 
     // Afficher tous les rendez-vous.
 
-    public static function getAllAppointments(): array
+    public static function getAllAppointments($id = NULL): array
     {
+        // je me connecte à la base de données
         $db = dbConnect();
-        $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients`= `patients`.`id` ORDER BY `dateHour`;';
-        $sth = $db->query($sql);
+        if (!$id) {
+            $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
+            FROM `appointments` 
+            LEFT JOIN `patients` 
+            ON `appointments`.`idPatients`= `patients`.`id` 
+            ORDER BY `dateHour`;';
+        } else {
+            // je formule ma requête affiche tout de la table liste concernant l'id récupéré
+            $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
+                    FROM `appointments` 
+                    LEFT JOIN `patients` 
+                    ON `appointments`.`idPatients`= `patients`.`id` 
+                    WHERE `idPatients`=:id; 
+                    ORDER BY `dateHour`;';
+        }
+        // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
+        $sth = $db->prepare($sql);
+        if ($id) {
+            // On affecte les valeurs au marqueur nominatif :
+            $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        }
+        // On stocke le résultat dans un objet puisque paramétrage effectué:
+        $sth->execute();
         $results = $sth->fetchAll();
         return $results;
     }

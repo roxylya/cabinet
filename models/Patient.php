@@ -120,7 +120,6 @@ class Patient
     }
 
 
-
     // vérifier si le mail existe déjà dans la base de données :
     public static function existsMail(string $mail)
     {
@@ -152,22 +151,16 @@ class Patient
     {
         // je me connecte à la base de données
         $db = dbConnect();
-
         // je formule ma requête affiche tout de la table liste concernant l'id récupéré
         $sql = 'SELECT * FROM `patients` WHERE `id`=:id;';
-
         // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
         $sth = $db->prepare($sql);
-
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
-
         // on exécute la requête
         $sth->execute();
-
         // On stocke le résultat dans un objet puisque paramétrage effectué:
         $results = $sth->fetch();
-
         // que l'on retourne en sortie de méthode
         return $results;
     }
@@ -195,30 +188,6 @@ class Patient
 
         // si le nombre de ligne est strictement supérieur à 0 alors il renverra true :
         return ($nbResults > 0) ? true : false;
-    }
-
-    public static function getApp($id): array
-    {
-        // je me connecte à la base de données
-        $db = dbConnect();
-
-        // je formule ma requête affiche tout de la table liste concernant l'id récupéré
-        $sql = 'SELECT `dateHour` FROM `appointments` WHERE `idPatients`=:id;';
-
-        // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
-        $sth = $db->prepare($sql);
-
-        // On affecte les valeurs au marqueur nominatif :
-        $sth->bindValue(':id', $id, PDO::PARAM_INT);
-
-        // on exécute la requête
-        $sth->execute();
-
-        // On stocke le résultat dans un objet puisque paramétrage effectué:
-        $results = $sth->fetchAll();
-
-        // que l'on retourne en sortie de méthode
-        return $results;
     }
 
     // Delete un patient :

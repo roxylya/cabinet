@@ -1,6 +1,6 @@
 <main>
 
-    <h1 class="text-center py-3">Ecrire les données</h1>
+    <h1 class="text-center pt-5 pb-3">Ecrire les données</h1>
     <div class="d-flex flex-wrap justify-content-center align-items-center mb-3">
         <div class="exos col-3 m-1 p-2">
             <h2>Exercice 1</h2>
