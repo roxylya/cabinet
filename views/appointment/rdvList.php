@@ -19,8 +19,10 @@
                     <td><?= $appointment->firstname ?></td>
                     <td><?= $appointment->phone ?></td>
                     <td class="actions">
-                        <a href="/controllers/addRdvCtrl.php?idAppointment=<?=$appointment->idAppointment ?>"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
-                    <a class="ps-5" href="/controllers/deleteRdvCtrl.php?idAppointment=<?=$appointment->idAppointment ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <a href="<?= (date('d-m-Y H:i',strtotime($appointment->dateHour))<= date('d-m-Y H:i')) ? '#' : '/controllers/addRdvCtrl.php?idAppointment='. $appointment->idAppointment ?>" >
+                        <img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
+                    <a class="ps-5" href="/controllers/deleteRdvCtrl.php?idAppointment=<?=$appointment->idAppointment ?>">
+                    <img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
                     </td>
                 </tr>
             <?php ;}
