@@ -106,13 +106,13 @@ class Patient
 
 
     // Afficher tous les patients.
-    public static function getAll($research = ""): array
+    public static function getAll($research = "")
     {
         $db = dbConnect();
-        $sql = 'SELECT * FROM `patients` WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research ORDER BY `lastname`;';
+        $sql = 'SELECT * FROM `patients` WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research ;';
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
-        $sth->bindValue(':research', '%'.$research.'%', PDO::PARAM_STR);
+        $sth->bindValue(':research', '%' . $research . '%', PDO::PARAM_STR);
         $sth->execute();
         $results = $sth->fetchAll();
 

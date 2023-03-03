@@ -1,3 +1,4 @@
+
 <main class="py-5">
     <h2 class="text-center">Liste des patients</h2>
     <p class="text-center py-1"><?= $message ?? '' ?></p>

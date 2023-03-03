@@ -1,14 +1,14 @@
 <main>
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
     <h2 class="text-center pt-5">Rendez-vous</h2> 
-        <p class="messageOk p-2"><?= $messageOk ?? '' ?></p>
+        <p class="messageOk p-1"><?= $messageOk ?? '' ?></p>
         <form method="post" class="form p-4">
-            <div class="date p-3">
+            <div class="date p-1">
                 <label for="dateAppointment">Date :</label>
                 <input class="noEdit" type="date" name="dateAppointment" id="dateAppointment" value="<?= $dateAppointment ?? date('Y-m-d', strtotime($appointment->dateHour)) ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 year')) ?>" pattern="<?= REGEX_DATE ?>" readonly>
                 <p class="error"><?= $alert['dateAppointment'] ?? '' ?></p>
             </div>
-            <div class="hourMinut p-3">
+            <div class="hourMinut p-1">
                 <label for="hour">Heure :</label>
                 <div class="d-flex justify-content-around align-items-center">
                     <select class="noEdit" name="hour" id="hour-select" disabled>
@@ -31,7 +31,7 @@
                 </div>
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
-            <div class="p-3">
+            <div class="p-1">
                 <label for="idPatient">Patient : </label>
                 <select class="patient noEdit" name="idPatient" id="idPatient" disabled>
                     <?php foreach ($patients as $patient) { 
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </form>
-        <div class="br py-4">
+        <div class="br py-5 mb-3">
 
         </div>
     </div>
