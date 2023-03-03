@@ -125,8 +125,8 @@ try {
             }
         } else {
             $dateHour = $dateAppointment . ' ' . $hour . ':' . $minut . ':00';
-            if (Appointment::existsDateHour($dateHour) && $dateHour != $appointment->dateHour) {
-                $alert['dateAppointment'] = 'Ce rendez-vous est déjà pris 2.';
+            if (Appointment::existsDateHour($dateHour) && $idAppointment != $appointment->idAppointment) {
+                $alert['dateAppointment'] = 'Ce rendez-vous est déjà pris.';
             }
         }
 
@@ -163,7 +163,7 @@ try {
                 // Ajouter l'enregistrement du nouveau RDV à la base de données :
                 $appointment->update($idAppointment);
                 // message de confirmation de l'ajout du RDV à la base de données :
-                $messageOk = 'Les données du RDV ont été modifiées.';
+                $messageOk = 'Les données du RDV ont été modifiées.'    ;
             }
         }
     }

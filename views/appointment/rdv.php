@@ -36,12 +36,12 @@
                 <select class="patient noEdit" name="idPatient" id="idPatient" disabled>
                     <?php foreach ($patients as $patient) { 
                         $patientId= $idPatient ?? $patient->id;?>
-                        <?= '<option value="' . $patient->id . '" '. (($patientId == $appointment->idPatients) ? 'selected' : '') .'>' . (($patient->lastname . ' ' . $patient->firstname)  ??  ($lastname . ' ' . $firstname)) .' </option>'; ?>
+                        <option value="<?= $patient->id  ?>"<?= (($patientId == $patient->id) ? 'selected' : '') ?>><?= (($patient->lastname . ' ' . $patient->firstname)  ??  ($lastname . ' ' . $firstname)) ?> </option> 
                     <?php } ?>
                 </select>
                 <p class="error"><?= $alert['idPatient'] ?? '' ?></p>
             </div>
-            <div class="btnEnvoyer text-center py-3 d-flex justify-content-around align-items-center">
+            <div class="btnEnvoyer text-center py-2 d-flex justify-content-around align-items-center">
                 <input type="submit" value="Envoyer">
                 <div class="btnPen text-center ms-2" id="pen">
                     <img src="/public/assets/img/pen.png" alt="crayon" class="pen py-2">
