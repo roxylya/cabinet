@@ -8,25 +8,17 @@
     <!-- pagination -->
     <nav aria-label="Page navigation ">
         <ul class="pagination justify-content-center mt-5">
-            <li class="page-item">
-                <?php
-                // Partie "Liens"
-                /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
-                    * vers la précédente. On va donc ne l'afficher que si on est sur une autre
-                    * page que la première */
-                if ($page > 1) :
-                ?>
-                    <a class="page-link" href="patientsListCtrl.php?page=<?= $page - 1 ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a><?php
-                    endif;
-                    /* On va effectuer une boucle autant de fois que l'on a de pages */
-                    for ($i = 1; $i <= $pageNb; $i++) : ?>
+            <li class="page-item" <?= ($page <= 1) ? "disabled" : "" ?>>
+                <a class="page-link" href="patientsListCtrl.php?page=<?= $page - 1 ?>" aria-label="Previous">
+                    < </a>
+
+                        <!-- On va effectuer une boucle autant de fois que l'on a de pages  -->
+                        <?php for ($i = 1; $i <= $pageNb; $i++) : ?>
             </li>
             <li class="page-item"><a class="page-link" href="patientsListCtrl.php?page=<?= $i ?>"><?= $i ?></a></li>
         <?php endfor; ?>
         <li class="page-item">
-             <!-- Affiche de l'icone page suivante sauf sur la dernière page en fonction du pageNb -->
+            <!-- Affiche de l'icone page suivante sauf sur la dernière page en fonction du pageNb -->
             <?php if ($page < $pageNb) : ?>
                 <a class="page-link" href="patientsListCtrl.php?page=<?= $page + 1 ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

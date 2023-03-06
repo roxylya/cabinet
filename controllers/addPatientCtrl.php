@@ -192,6 +192,7 @@ if (empty($id)) {
     include(__DIR__ . '/../views/patient/addPatient.php');
 } else {
     include(__DIR__ . '/../views/patient/patientProfil.php');
+
 }
 
 include(__DIR__ . '/../views/templates/footer.php');

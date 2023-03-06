@@ -79,21 +79,15 @@ class Appointment
     {
         // je me connecte à la base de données
         $db = dbConnect();
-        if (!$id) {
-            $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
-            FROM `appointments` 
-            LEFT JOIN `patients` 
-            ON `appointments`.`idPatients`= `patients`.`id` 
-            ORDER BY `dateHour`;';
-        } else {
-            // je formule ma requête affiche tout de la table liste concernant l'id récupéré
-            $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
-                    FROM `appointments` 
-                    LEFT JOIN `patients` 
-                    ON `appointments`.`idPatients`= `patients`.`id` 
-                    WHERE `idPatients`=:id; 
-                    ORDER BY `dateHour`;';
+        $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
+        FROM `appointments` 
+        JOIN `patients` 
+        ON `appointments`.`idPatients`= `patients`.`id` ';
+        if ($id) {
+            $sql .= ' WHERE `idPatients`=:id';
         }
+        $sql .= ' ORDER BY `dateHour`;';
+
         // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
         $sth = $db->prepare($sql);
         if ($id) {
