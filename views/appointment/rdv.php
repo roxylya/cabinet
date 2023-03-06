@@ -35,7 +35,7 @@
                 <label for="idPatient">Patient : </label>
                 <select class="patient noEdit" name="idPatient" id="idPatient" disabled>
                     <?php foreach ($patients as $patient) { 
-                        $patientId= $idPatient ?? $patient->id;?>
+                        $patientId= $idPatient ?? $appointment->idPatients;?>
                         <option value="<?= $patient->id  ?>"<?= (($patientId == $patient->id) ? 'selected' : '') ?>><?= (($patient->lastname . ' ' . $patient->firstname)  ??  ($lastname . ' ' . $firstname)) ?> </option> 
                     <?php } ?>
                 </select>

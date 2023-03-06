@@ -12,6 +12,12 @@ try {
     $research = trim((string)filter_input(INPUT_GET, 'research', FILTER_SANITIZE_SPECIAL_CHARS));
     $patients = Patient::getAll($research);
 
+    // pagination
+    // définir les variables :$pageNb $page 
+    // $limite= $limit (le nombre de patient à afficher par page), $nombredElementsTotal=$patientsNb (nombre de patient enregistré dans la bd)
+    /* On calcule le nombre de pages */
+    $pageNb = ceil($patientsNb / $limit);
+    
 } catch (\Throwable $th) {
     $errorMessage = $th->getMessage();
     include(__DIR__ . '/../views/templates/header.php');

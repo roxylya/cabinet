@@ -5,7 +5,7 @@
         <input type="search" name="research" class="research" value="<?= $research ?? '' ?>">
         <input type="submit" name="submitResearch" class="research" value="Rechercher">
     </form>
-    <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
+    <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-2">
         <div class="avertissement">Pour accéder aux informations passer en mode paysage.</div>
         <table>
             <tr class="titleCol">
@@ -36,21 +36,34 @@
             ?>
         </table>
         <!-- pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+        <nav aria-label="Page navigation ">
+            <ul class="pagination justify-content-center mt-5">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+                    <?php
+                    // Partie "Liens"
+                    /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
+                    * vers la précédente. On va donc ne l'afficher que si on est sur une autre
+                    * page que la première */
+                    if ($page > 1) :
+                    ?>
+                        <a class="page-link" href="patientsList.php?page=<?= $page - 1 ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a><?php
+                        endif;
+                        /* On va effectuer une boucle autant de fois que l'on a de pages */
+                        for ($i = 1; $i <= $pageNb; $i++) : ?>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="patientsList.php?page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php endfor; ?>
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <!--  Avec le nombre total de pages, on peut aussi masquer le lien
+                * vers la page suivante quand on est sur la dernière -->
+                        <?php if ($page < $pageNb) :?>
+                    <a class="page-link" href="patientsList.php?page=<?= $page + 1 ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
-                </li>
+                <?php endif;?>
+            </li>
             </ul>
         </nav>
     </div>
