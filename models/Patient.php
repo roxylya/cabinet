@@ -112,7 +112,10 @@ class Patient
         // var_dump($limit);
         // die;
         $db = dbConnect();
-        $sql = 'SELECT * FROM `patients` WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research LIMIT :firstPatient, :limit ;';
+        $sql = 'SELECT * 
+        FROM `patients` 
+        WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research 
+        LIMIT :firstPatient, :limit ;';
         $sth = $db->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':research', '%' . $research . '%', PDO::PARAM_STR);
@@ -123,6 +126,26 @@ class Patient
 
         return $results;
     }
+
+    // Afficher le nombre de patients récupéré dans la recherche :
+    public static function getAllCount($research = "")
+    {
+        // var_dump($firstPatient);
+        // var_dump($limit);
+        // die;
+        $db = dbConnect();
+        $sql = 'SELECT * 
+        FROM `patients` 
+        WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research ;';
+        $sth = $db->prepare($sql);
+        // On affecte les valeurs au marqueur nominatif :
+        $sth->bindValue(':research', '%' . $research . '%', PDO::PARAM_STR);
+        $sth->execute();
+        $results = $sth->fetchAll();
+
+        return $results;
+    }
+
 
 
     // vérifier si le mail existe déjà dans la base de données :

@@ -8,23 +8,26 @@
     <!-- pagination -->
     <nav aria-label="Page navigation ">
         <ul class="pagination justify-content-center mt-5">
-            <li class="page-item" <?= ($page <= 1) ? "disabled" : "" ?>>
-                <a class="page-link" href="patientsListCtrl.php?page=<?= $page - 1 ?>" aria-label="Previous">
-                    < </a>
-
-                        <!-- On va effectuer une boucle autant de fois que l'on a de pages  -->
-                        <?php for ($i = 1; $i <= $pageNb; $i++) : ?>
-            </li>
-            <li class="page-item"><a class="page-link" href="patientsListCtrl.php?page=<?= $i ?>"><?= $i ?></a></li>
-        <?php endfor; ?>
-        <li class="page-item">
-            <!-- Affiche de l'icone page suivante sauf sur la dernière page en fonction du pageNb -->
-            <?php if ($page < $pageNb) : ?>
-                <a class="page-link" href="patientsListCtrl.php?page=<?= $page + 1 ?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+            <li class="page-item <?= ($page == 1) ? "disabled" : "" ?>">
+                <a href="/controllers/patientsListCtrl.php?page=<?= $page - 1 ?>" class="page-link">
+                    <span aria-hidden="true">&#171; </span>
                 </a>
-            <?php endif; ?>
-        </li>
+            </li>
+            <!-- On va effectuer une boucle autant de fois que l'on a de pages  -->
+            <?php for ($i = 1; $i <= $pageNb; $i++) { ?>
+                <li class="page-item <?= ($page == $i) ? "active" : "" ?>">
+                    <a class="page-link" href="/controllers/patientsListCtrl.php?page=<?= $i ?>"><?= $i ?></a>
+                </li>
+            <?php } ?>
+
+            <!-- Affiche de l'icone page suivante sauf sur la dernière page en fonction du pageNb -->
+            <?php if ($page < $pageNb) { ?>
+                <li class="page-item <?= ($page == $pageNb) ? "disabled" : "" ?>">
+                    <a class="page-link" href="/controllers/patientsListCtrl.php?page=<?= $page + 1 ?>" aria-label="Next">
+                        <span aria-hidden="true">&#187;</span>
+                    </a>
+                <?php } ?>
+                </li>
         </ul>
     </nav>
     <div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-2">
