@@ -33,6 +33,13 @@ h1 {
 
 h2 {
     font-size: 1.7rem;
+    text-shadow: 1px 1px 2px #b4d5e072;
+    
+}
+
+h3{
+    color: #f99e49;
+    text-shadow: 1px 1px 2px #000000;
 }
 
 p {

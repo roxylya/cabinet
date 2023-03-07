@@ -188,6 +188,26 @@ class Patient
         return $results;
     }
 
+    // Afficher les informations du patient sélectionné (loupe) en récupérant l'id:
+
+        public static function getIdPatient($mail): object | bool
+        {
+            // je me connecte à la base de données
+            $db = dbConnect();
+            // je formule ma requête affiche tout de la table liste concernant le mail récupéré
+            $sql = 'SELECT `id` FROM `patients` WHERE `mail`=:mail;';
+            // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
+            $sth = $db->prepare($sql);
+            // On affecte les valeurs au marqueur nominatif :
+            $sth->bindValue(':mail', $mail);
+            // on exécute la requête
+            $sth->execute();
+            // On stocke le résultat dans un objet puisque paramétrage effectué:
+            $results = $sth->fetch();
+            // que l'on retourne en sortie de méthode
+            return $results;
+        }
+
 
     // // Update :
 
