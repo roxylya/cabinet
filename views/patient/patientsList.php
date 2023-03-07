@@ -9,7 +9,7 @@
     <nav aria-label="Page navigation ">
         <ul class="pagination justify-content-center mt-5">
             <li class="page-item <?= ($page == 1) ? "disabled" : "" ?>">
-                <a href="/controllers/patientsListCtrl.php?page=<?= $page - 1 ?>" class="page-link">
+                <a href="/controllers/patientsListCtrl.php?page=<?= $page - 1 ?>" class="page-link" aria-label="Preview">
                     <span aria-hidden="true">&#171; </span>
                 </a>
             </li>
