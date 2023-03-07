@@ -208,7 +208,7 @@ try {
             $patient->setMail($mail);
             $patient->setPhone($phone);
             $patient->setBirthdate($birthdate);
-        
+
             // Ajouter l'enregistrement du nouveau patient à la base de données :
             $patient->add();
 
@@ -237,7 +237,7 @@ try {
             $birthdate = '';
             $phone = '';
             $mail = '';
-            $date = '';
+            $dateAppointment = '';
             $patient = '';
             $hour = '';
             $minut = '';
