@@ -199,6 +199,11 @@ try {
 
         // si le tableau alert est vide :
         if (empty($alert)) {
+            // je me connecte à la base de données
+            $db = dbConnect();
+            $db->beginTransaction();
+
+
             // Pour la partie Client :
             // je crée un nouveau élément de la classe Patient:
             $patient = new Patient();
@@ -225,7 +230,8 @@ try {
             // Ajouter l'enregistrement du nouveau rdv à la base de données :
             $appointment->addAppointment($idPatient);
 
-
+            /* Commit the changes */
+            $db->commit();
 
             // si tout est bon :
             // message de confirmation de l'ajout du patient à la base de données :
@@ -246,6 +252,7 @@ try {
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
     $errorMessage = $th->getMessage();
+    $pdo->rollback();
     include(__DIR__ . '/../views/error.php');
     die;
 }
