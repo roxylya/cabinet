@@ -1,7 +1,7 @@
 <main>
    
     <h2 class="text-center pt-5">Agenda</h2> 
-    <p class="text-center p-3"><?= $message ?? '' ?></p>
+    <p class="text-center p-3"><?= (isset($_GET["code"]))  ? CODES[$_GET["code"]] : '' ?></p>
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
         <div class="avertissement">Pour accéder aux informations passer en mode paysage.</div>
         <table>

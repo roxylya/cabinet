@@ -5,6 +5,9 @@ require_once(__DIR__ . '/../models/database.php');
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
 
+// on a besoin d'accéder aux constantes :
+require_once(__DIR__ . '/../config/config.php');
+
 // on accède à la classe :
 require_once(__DIR__ . '/../models/Appointment.php');
 
@@ -12,7 +15,7 @@ require_once(__DIR__ . '/../models/Appointment.php');
 
 // je teste si mon code fonctionne :
 try {
-    $message= filter_input(INPUT_GET, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
+    $code= intval(filter_input(INPUT_GET, 'code', FILTER_SANITIZE_NUMBER_INT));
     // je récupère la liste des patients pour obtenir les noms et prénom dans le select :
     $appointments = Appointment::getAllAppointments();
 } catch (\Throwable $th) {

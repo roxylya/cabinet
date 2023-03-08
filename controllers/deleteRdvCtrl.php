@@ -12,11 +12,11 @@ try {
     $idAppointment = intval(filter_input(INPUT_GET, 'idAppointment', FILTER_SANITIZE_NUMBER_INT));
     $appointment = Appointment::delete($idAppointment);
     if ($appointment) {
-        $message = 'Le rendez-vous a été supprimé.';
+        $code = 1;
     } else {
-        $message = 'Le rendez-vous n\'existe pas.';   
+        $code = 0;   
     }
-    header('location: /controllers/rdvListCtrl.php?message=' . $message);
+    header('location: /controllers/rdvListCtrl.php?code=' . $code);
         die;
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :
