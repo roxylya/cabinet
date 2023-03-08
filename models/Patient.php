@@ -1,7 +1,7 @@
 <?php
 
 // on a besoin d'accéder à la db :
-require_once(__DIR__ . '/../models/database.php');
+require_once(__DIR__ . '/../models/Database.php');
 // le helper :
 require_once(__DIR__ . '/../helper/dd.php');
 
@@ -82,9 +82,7 @@ class Patient
 
 
     public function add()
-    {
-
-        //On se connecte à la BDD
+    {   //On se connecte à la BDD
         $db = dbConnect();
 
         //On insère les données reçues   

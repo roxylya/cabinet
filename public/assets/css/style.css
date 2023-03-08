@@ -452,6 +452,32 @@ input[type="search"] {
 /* end pagination*/
 
 
+
+/* patientsList */
+
+.modal-header{
+    background-color: rgb(91, 3, 3);
+    color: #ddecf1;
+}
+
+.btnNo{
+background-color: #ddecf1;
+color: darkslategray;
+}
+.btnNo:hover{
+    background-color: #ddecf1;
+    color: darkslategray;
+    }
+
+.btnDelete{
+    background-color: rgb(91, 3, 3);
+    color: #ddecf1;
+}
+
+.btnDelete:hover{
+    background-color: rgb(91, 3, 3);
+    color: #ddecf1;
+}
 /* footer */
 footer {
     background-color: darkslategray;

@@ -44,21 +44,19 @@
             <?php
             foreach ($patients as $patient) { ?>
 
-            <?= '<tr id="' . $patient->id . '">
-                    <td>' . $patient->lastname . '</td>
-                    <td>' . $patient->firstname . '</td>
-                    <td>' . date('d-m-Y', strtotime($patient->birthdate)) . '</td>
-                    <td>' . $patient->phone . '</td>
-                    <td>' . $patient->mail . '</td>
+                <tr id="<?= $patient->id ?>">
+                    <td><?= $patient->lastname ?></td>
+                    <td><?= $patient->firstname ?></td>
+                    <td><?= date('d-m-Y', strtotime($patient->birthdate)) ?></td>
+                    <td><?= $patient->phone ?></td>
+                    <td><?= $patient->mail ?></td>
                     <td class="actions">
-                        <a href="/controllers/addPatientCtrl.php?id=' . $patient->id .
-                    '"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
-                    <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=' . $patient->id .
-                    '"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <a href="/controllers/addPatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
+                         <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
                     </td>
-                </tr>';
-            }
-            ?>
+                </tr>
+            <?php } ?>
+
         </table>
     </div>
 </main>
