@@ -36,7 +36,7 @@ try {
 
 
     // je récupère la liste des patients pour obtenir les noms et prénom dans le select :
-    $patients = Patient::getAll();
+    $patients = Patient::getAllCount();
 
 
     // Nettoyage et validation du formulaire reçu en post :
