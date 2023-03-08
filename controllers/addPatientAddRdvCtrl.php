@@ -196,57 +196,66 @@ try {
             }
         }
 
+        try {
+            // si le tableau alert est vide :
+            if (empty($alert)) {
+                // je me connecte à la base de données
+                $db = dbConnect();
 
-        // si le tableau alert est vide :
-        if (empty($alert)) {
-            // je me connecte à la base de données
-            $db = dbConnect();
-            $db->beginTransaction();
+                $db->beginTransaction();
 
+                // Pour la partie Client :
+                // je crée un nouveau élément de la classe Patient:
+                $patient = new Patient();
+                // je lui donne les valeurs récupérées, nettoyées et validées :
+                $patient->setLastname($lastname);
+                $patient->setFirstname($firstname);
+                $patient->setMail($mail);
+                $patient->setPhone($phone);
+                $patient->setBirthdate($birthdate);
 
-            // Pour la partie Client :
-            // je crée un nouveau élément de la classe Patient:
-            $patient = new Patient();
-            // je lui donne les valeurs récupérées, nettoyées et validées :
-            $patient->setLastname($lastname);
-            $patient->setFirstname($firstname);
-            $patient->setMail($mail);
-            $patient->setPhone($phone);
-            $patient->setBirthdate($birthdate);
+                // Ajouter l'enregistrement du nouveau patient à la base de données :
+                $patient->add();
 
-            // Ajouter l'enregistrement du nouveau patient à la base de données :
-            $patient->add();
+                // je récupère l'id du patient nouvellement crée dans la base de données, j'utilise le mail qui est unique à chaque patient :
+                $patient = Patient::getIdPatient($mail);
+                $idPatient = $patient->id;
+                //    pour la partie rdv :
+                // je crée un nouveau élément de la classe Appointment:
+                $appointment = new Appointment();
+                // je lui donne les valeurs récupérées, nettoyées et validées :
+                $appointment->setDateHour($dateHour);
+                $appointment->setIdPatients($idPatient);
+                // Ajouter l'enregistrement du nouveau rdv à la base de données :
+                $appointment->addAppointment($idPatient);
 
+                /* Commit the changes */
+                $db->commit();
 
-            // je récupère l'id du patient nouvellement crée dans la base de données, j'utilise le mail qui est unique à chaque patient :
-            $patient = Patient::getIdPatient($mail);
-            $idPatient = $patient->id;
-            //    pour la partie rdv :
-            // je crée un nouveau élément de la classe Appointment:
-            $appointment = new Appointment();
-            // je lui donne les valeurs récupérées, nettoyées et validées :
-            $appointment->setDateHour($dateHour);
-            $appointment->setIdPatients($idPatient);
-            // Ajouter l'enregistrement du nouveau rdv à la base de données :
-            $appointment->addAppointment($idPatient);
+                // si tout est bon :
+                // message de confirmation de l'ajout du patient à la base de données :
+                $messageOk = 'Nouveau patient et RDV enregistrés.';
 
-            /* Commit the changes */
-            $db->commit();
+                // je réinitialise l'affichage : 
+                $firstname = '';
+                $lastname = '';
+                $birthdate = '';
+                $phone = '';
+                $mail = '';
+                $dateAppointment = '';
+                $patient = '';
+                $hour = '';
+                $minut = '';
+            }
+        } catch (Exception $e) //en cas d'erreur
+        {
+            //on annule la transation
+            $db->rollback();
 
-            // si tout est bon :
-            // message de confirmation de l'ajout du patient à la base de données :
-            $messageOk = 'Nouveau patient et RDV enregistrés.';
-
-            // je réinitialise l'affichage : 
-            $firstname = '';
-            $lastname = '';
-            $birthdate = '';
-            $phone = '';
-            $mail = '';
-            $dateAppointment = '';
-            $patient = '';
-            $hour = '';
-            $minut = '';
+            //on affiche un message d'erreur ainsi que les erreurs
+            $errorMessage = $e->getMessage();
+            include(__DIR__ . '/../views/error.php');
+            die;
         }
     }
 } catch (\Throwable $th) {
