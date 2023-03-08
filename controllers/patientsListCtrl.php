@@ -3,11 +3,15 @@
 require_once(__DIR__ . '/../models/database.php');
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
+// on a besoin d'accéder aux constantes :
+require_once(__DIR__ . '/../config/config.php');
 // on a besoin du models :
 require_once(__DIR__ . '/../models/Patient.php');
 
 
 try {
+
+    $code= intval(filter_input(INPUT_GET, 'code', FILTER_SANITIZE_NUMBER_INT));
     // Nettoyage et validation du formulaire reçu en post :
     $research = trim((string)filter_input(INPUT_GET, 'research', FILTER_SANITIZE_SPECIAL_CHARS));
 

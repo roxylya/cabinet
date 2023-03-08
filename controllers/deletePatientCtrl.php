@@ -17,11 +17,11 @@ try {
     $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
     $patient = Patient::delete($id);
     if ($patient) {
-        $message = 'Le patient a été supprimé.';
+        $code = 3;
     } else {
-        $message = 'Le patient n\'existe pas.';   
+        $code = 2; 
     }
-    header('location: /controllers/patientsListCtrl.php?message=' . $message);
+    header('location: /controllers/patientsListCtrl.php?code=' . $code);
         die;
 } catch (\Throwable $th) {
     // Si ça ne marche pas afficher la page d'erreur avec le message d'erreur indiquant la raison :

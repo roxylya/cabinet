@@ -1,6 +1,6 @@
 <main class="py-5">
     <h2 class="text-center">Liste des patients</h2>
-    <p class="text-center py-1"><?= $message ?? '' ?></p>
+    <p class="text-center py-1"><?= (isset($_GET["code"]))  ? CODES[$_GET["code"]] : '' ?></p>
     <form action="patientsListCtrl.php" class="text-center py-1" method="get">
         <input type="search" name="research" class="research" value="<?= $research ?? '' ?>">
         <input type="submit" name="submitResearch" class="research" value="Rechercher">
