@@ -52,7 +52,25 @@
                     <td><?= $patient->mail ?></td>
                     <td class="actions">
                         <a href="/controllers/addPatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
-                        <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <a class="ps-5" data-bs-toggle="modal" data-bs-target="#deletePatient"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deletePatient" tabindex="-1" aria-labelledby="deletePatientLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deletePatientLabel">Suppression d'un patient</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr de vouloir supprimer ce patient ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btnNo" data-bs-dismiss="modal">Non</button>
+                                        <a href="/controllers/deletePatientCtrl.php?id=<?= $patient->id ?>"> <button type="button" class="btn btnDelete">Oui, je supprime ce patient.</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             <?php } ?>

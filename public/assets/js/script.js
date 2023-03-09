@@ -46,6 +46,7 @@ pen.addEventListener("click", notDisabled, false);
 
 
 // Modal de confirmation de suppression :
-
+//  actuellement pas de js utilisé chaque trash est rattaché à une modale
+// à voir pour n'avoir qu'une seule modale au click apparemment possible en jquery 
 
 

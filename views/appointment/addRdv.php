@@ -3,12 +3,12 @@
     <div class="d-flex flex-column justify-content-center align-items-center mb-5">
         <p class="messageOk p-2"><?= $messageOk ?? '' ?></p>
         <form method="post" class="form p-4">
-            <div class="date p-3">
+            <div class="date p-2">
                 <label for="dateAppointment">Date :</label>
                 <input type="date" name="dateAppointment" id="dateAppointment" value="<?= $dateAppointment ?? '' ?>" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d', strtotime('+1 year')) ?>" pattern="<?= REGEX_DATE ?>" required>
                 <p class="error"><?= $alert['dateAppointment'] ?? '' ?></p>
             </div>
-            <div class="hourMinut p-3">
+            <div class="hourMinut p-2">
                 <label for="hour">Heure :</label>
                 <div class="d-flex justify-content-around align-items-center">
                     <select name="hour" id="hour-select">
@@ -29,7 +29,7 @@
                 </div>
                 <p class="error"><?= $alert['hour'] ?? '' ?></p>
             </div>
-            <div class="p-3">
+            <div class="p-2">
                 <label for="idPatient">Patient : </label>
                 <select class="patient" name="idPatient" id="idPatient">
                     <?php foreach ($patients as $patient) {
@@ -39,7 +39,7 @@
                 </select>
                 <p class="error"><?= $alert['idPatient'] ?? '' ?></p>
             </div>
-            <div class="btnEnvoyer text-center">
+            <div class="btnEnvoyer text-center py-2">
                 <input type="submit" value="Envoyer">
             </div>
         </form>
