@@ -1,6 +1,6 @@
 <?php
 // on a besoin d'accéder à la db :
-require_once(__DIR__ . '/../models/database.php');
+require_once(__DIR__ . '/../models/Database.php');
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
 // on a besoin du models :

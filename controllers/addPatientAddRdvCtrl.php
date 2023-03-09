@@ -1,6 +1,6 @@
 <?php
 // on a besoin d'accéder à la db :
-require_once(__DIR__ . '/../models/database.php');
+require_once(__DIR__ . '/../models/Database.php');
 // on a besoin d'accéder aux constantes :
 require_once(__DIR__ . '/../config/constants.php');
 // on a besoin du models :
@@ -198,10 +198,8 @@ try {
 
         // si le tableau alert est vide :
         if (empty($alert)) {
-            // je me connecte à la base de données
-            
-
-            $db->beginTransaction();
+        
+            // $db->beginTransaction();
 
             // Pour la partie Client :
             // je crée un nouveau élément de la classe Patient:
@@ -217,8 +215,8 @@ try {
             $isAddedPatient = $patient->add();
 
             // je récupère l'id du patient nouvellement crée dans la base de données, j'utilise le mail qui est unique à chaque patient :
-            // $patient = Patient::getIdPatient($mail);
-            $idPatient = $db->lastInsertId();;
+            $patient = Patient::getIdPatient($mail);
+            $idPatient = $patient->id;
             //    pour la partie rdv :
             // je crée un nouveau élément de la classe Appointment:
             $appointment = new Appointment();
@@ -230,18 +228,18 @@ try {
             $isAddedAppointment = false;
             if ($isAddedPatient == true && $isAddedAppointment == true) {
                    /* Commit the changes */
-                   $db->commit();
-            } else {
-                $db->rollBack();
-                if($isAddedAppointment == false && $isAddedPatient == false){
-                    throw new Exception('Des informations manquent sur le rendez-vous et sur le patient.'); 
-                 }
-                if($isAddedAppointment == false){
-                   throw new Exception('Des informations manquent sur le rendez-vous.'); 
-                }
-                if($isAddedPatient == false){
-                    throw new Exception('Des informations manquent sur le patient.'); 
-                }
+                //    $db->commit();
+            // } else {
+            //     $db->rollBack();
+            //     if($isAddedAppointment == false && $isAddedPatient == false){
+            //         throw new Exception('Des informations manquent sur le rendez-vous et sur le patient.'); 
+            //      }
+            //     if($isAddedAppointment == false){
+            //        throw new Exception('Des informations manquent sur le rendez-vous.'); 
+            //     }
+            //     if($isAddedPatient == false){
+            //         throw new Exception('Des informations manquent sur le patient.'); 
+            //     }
                 
             }
 

@@ -299,6 +299,7 @@ je désactive l'affichage du tableau si mobile tenu en portrait et l'affiche en 
     font-weight: bolder;
 }
 
+/* patientsList */
 
 /* research dans la liste des patients*/
 input[type="search"] {
@@ -447,14 +448,9 @@ input[type="search"] {
 .pager .disabled a:hover {
     color: #999999;
 }
-
-
 /* end pagination*/
 
-
-
-/* patientsList */
-
+/* modal de confirmation */
 .modal-header{
     background-color: rgb(91, 3, 3);
     color: #ddecf1;

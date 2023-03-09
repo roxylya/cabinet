@@ -52,11 +52,12 @@
                     <td><?= $patient->mail ?></td>
                     <td class="actions">
                         <a href="/controllers/addPatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/loupe.png" class="tools" alt="loupe"></a>
-                         <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
+                        <a class="ps-5" href="/controllers/deletePatientCtrl.php?id=<?= $patient->id ?>"><img src="/public/assets/img/trash.png" class="tools" alt="poubelle"></a>
                     </td>
                 </tr>
             <?php } ?>
-
         </table>
     </div>
 </main>
+
+<!-- Modal -->
