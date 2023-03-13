@@ -55,13 +55,9 @@ class Appointment
 
     public function addAppointment($idPatient)
     {
-
-        //On se connecte à la BDD
-        $db = dbConnect();
-
         //On insère les données reçues   
         // on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = $db->prepare('INSERT INTO `appointments`(`dateHour`,`idPatients`) VALUES(:dateHour, :idPatients)');
+        $sth = Database::getInstance()->prepare('INSERT INTO `appointments`(`dateHour`,`idPatients`) VALUES(:dateHour, :idPatients)');
         $sth->bindValue(':dateHour', $this->dateHour);
         $sth->bindValue(':idPatients', $idPatient);
         $sth->execute();
@@ -77,8 +73,6 @@ class Appointment
 
     public static function getAllAppointments($id = NULL): array
     {
-        // je me connecte à la base de données
-        $db = dbConnect();
         $sql = 'SELECT `appointments`.`id` as `idAppointment`, `appointments`.`dateHour`, `patients`.`id` as `idPatient`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate` 
         FROM `appointments` 
         JOIN `patients` 
@@ -89,7 +83,7 @@ class Appointment
         $sql .= ' ORDER BY `dateHour`;';
 
         // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
-        $sth = $db->prepare($sql);
+        $sth = Database::getInstance()->prepare($sql);
         if ($id) {
             // On affecte les valeurs au marqueur nominatif :
             $sth->bindValue(':id', $id, PDO::PARAM_INT);
@@ -103,9 +97,8 @@ class Appointment
     // vérifier si l'id existe dans la base de données :
     public static function existsIdPatient(int $idPatient)
     {
-        $db = dbConnect();
         $sql = 'SELECT `id` FROM `patients` WHERE `patients`.`id` = :idPatient;';
-        $sth = $db->prepare($sql);
+        $sth = Database::getInstance()->prepare($sql);
         $sth->bindValue(':idPatient', $idPatient, PDO::PARAM_INT);
         $sth->execute();
         $results = $sth->fetchAll();
@@ -116,9 +109,8 @@ class Appointment
     // vérifier si l'horaire est déjà pris dans la base de données :
     public static function existsDateHour(string $dateHour)
     {
-        $db = dbConnect();
         $sql = 'SELECT `id` FROM `appointments` WHERE `appointments`.`dateHour` = ?;';
-        $sth = $db->prepare($sql);
+        $sth = Database::getInstance()->prepare($sql);
         $sth->execute([$dateHour]);
         $results = $sth->fetchAll();
 
@@ -130,8 +122,6 @@ class Appointment
 
     public static function get($idAppointment): object | bool
     {
-        // je me connecte à la base de données
-        $db = dbConnect();
         // je formule ma requête affiche les éléments souhaités des tables appointments et patients concernant l'id récupéré
         // je mets des as pour différencier mes id des différentes tables : à voir
         $sql = 'SELECT `appointments`.`id` AS `idAppointment`, `appointments`.`idPatients`,`appointments`.`dateHour`, `patients`.`id`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, `patients`.`birthdate`  
@@ -139,7 +129,7 @@ class Appointment
         JOIN `patients` ON `appointments`.`idPatients`=`patients`.`id` 
         WHERE `appointments`.`id`=:idAppointment;';
         // on prépare la requête
-        $sth = $db->prepare($sql);
+        $sth = Database::getInstance()->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
         // on exécute la requête
@@ -154,12 +144,9 @@ class Appointment
 
     public function update($idAppointment)
     {
-        //On se connecte à la BDD
-        $db = dbConnect();
-
         // On insère les données reçues   
         // On note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = $db->prepare("
+        $sth = Database::getInstance()->prepare("
                 UPDATE `appointments` SET `dateHour`=:dateHour, `idPatients`=:idPatients WHERE `appointments`.`id`=:idAppointment;");
         $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
         $sth->bindValue(':dateHour', $this->dateHour);
@@ -177,13 +164,11 @@ class Appointment
 
     public static function delete($idAppointment)
     {
-        //On se connecte à la BDD
-        $db = dbConnect();
         // je mets des as pour différencier mes id des différentes tables :
         $sql = 'DELETE FROM `appointments` 
         WHERE `appointments`.`id`=:idAppointment ;';
         // on prépare la requête
-        $sth = $db->prepare($sql);
+        $sth = Database::getInstance()->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':idAppointment', $idAppointment, PDO::PARAM_INT);
         // on exécute la requête

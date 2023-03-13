@@ -198,8 +198,8 @@ try {
 
         // si le tableau alert est vide :
         if (empty($alert)) {
-        
-            // $db->beginTransaction();
+
+            Database::getInstance()->beginTransaction();
 
             // Pour la partie Client :
             // je crée un nouveau élément de la classe Patient:
@@ -213,50 +213,44 @@ try {
 
             // Ajouter l'enregistrement du nouveau patient à la base de données :
             $isAddedPatient = $patient->add();
+             // je récupère l'id du patient nouvellement crée dans la base de données :
+            $idPatient = Database::getInstance()->lastInsertId();
+            var_dump($idPatient);
+            die;
+            if ($isAddedPatient === false) {
+                Database::getInstance()->rollBack();
+                throw new Exception('Des informations manquent sur le patient.');
+            } else {
+                //    pour la partie rdv :
+                // je crée un nouveau élément de la classe Appointment:
+                $appointment = new Appointment();
+                // je lui donne les valeurs récupérées, nettoyées et validées :
+                $appointment->setDateHour($dateHour);
+                $appointment->setIdPatients($idPatient);
+                // Ajouter l'enregistrement du nouveau rdv à la base de données :
+                $isAddedAppointment = $appointment->addAppointment($idPatient);
+                if ($isAddedAppointment === false) {
+                    Database::getInstance()->rollBack();
+                    throw new Exception('Des informations manquent sur le rendez-vous.');
+                } else {
+                    //  on enregistre en bd:
+                    Database::getInstance()->commit();
+                    // si tout est bon :
+                    // message de confirmation de l'ajout du patient à la base de données :
+                    $messageOk = 'Nouveau patient et RDV enregistrés.';
 
-            // je récupère l'id du patient nouvellement crée dans la base de données, j'utilise le mail qui est unique à chaque patient :
-            $patient = Patient::getIdPatient($mail);
-            $idPatient = $patient->id;
-            //    pour la partie rdv :
-            // je crée un nouveau élément de la classe Appointment:
-            $appointment = new Appointment();
-            // je lui donne les valeurs récupérées, nettoyées et validées :
-            $appointment->setDateHour($dateHour);
-            $appointment->setIdPatients($idPatient);
-            // Ajouter l'enregistrement du nouveau rdv à la base de données :
-            $isAddedAppointment = $appointment->addAppointment($idPatient);
-            $isAddedAppointment = false;
-            if ($isAddedPatient == true && $isAddedAppointment == true) {
-                   /* Commit the changes */
-                //    $db->commit();
-            // } else {
-            //     $db->rollBack();
-            //     if($isAddedAppointment == false && $isAddedPatient == false){
-            //         throw new Exception('Des informations manquent sur le rendez-vous et sur le patient.'); 
-            //      }
-            //     if($isAddedAppointment == false){
-            //        throw new Exception('Des informations manquent sur le rendez-vous.'); 
-            //     }
-            //     if($isAddedPatient == false){
-            //         throw new Exception('Des informations manquent sur le patient.'); 
-            //     }
-                
+                    // je réinitialise l'affichage : 
+                    $firstname = '';
+                    $lastname = '';
+                    $birthdate = '';
+                    $phone = '';
+                    $mail = '';
+                    $dateAppointment = '';
+                    $patient = '';
+                    $hour = '';
+                    $minut = '';
+                }
             }
-
-            // si tout est bon :
-            // message de confirmation de l'ajout du patient à la base de données :
-            $messageOk = 'Nouveau patient et RDV enregistrés.';
-
-            // je réinitialise l'affichage : 
-            $firstname = '';
-            $lastname = '';
-            $birthdate = '';
-            $phone = '';
-            $mail = '';
-            $dateAppointment = '';
-            $patient = '';
-            $hour = '';
-            $minut = '';
         }
     }
 } catch (\Throwable $th) {

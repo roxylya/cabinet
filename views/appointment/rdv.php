@@ -12,7 +12,7 @@
                 <label for="hour">Heure :</label>
                 <div class="d-flex justify-content-around align-items-center">
                     <select class="noEdit" name="hour" id="hour-select" disabled>
-                    <?php $hourToDisplay = $hour ?? date('h', strtotime($appointment->dateHour)) ?>
+                    <?php $hourToDisplay = $hour ?? date('H', strtotime($appointment->dateHour)) ?>
                         <option <?= ($hourToDisplay=='09') ? 'selected' : ''?>>09</option>
                         <option <?= ($hourToDisplay=='10') ? 'selected' : ''?>>10</option>
                         <option <?= ($hourToDisplay=='11') ? 'selected' : ''?>>11</option>
