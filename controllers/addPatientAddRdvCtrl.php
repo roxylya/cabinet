@@ -199,7 +199,8 @@ try {
         // si le tableau alert est vide :
         if (empty($alert)) {
 
-            Database::getInstance()->beginTransaction();
+            $pdo = Database::getInstance();
+            $pdo->beginTransaction();
 
             // Pour la partie Client :
             // je crée un nouveau élément de la classe Patient:
@@ -213,43 +214,36 @@ try {
 
             // Ajouter l'enregistrement du nouveau patient à la base de données :
             $isAddedPatient = $patient->add();
-             // je récupère l'id du patient nouvellement crée dans la base de données :
-            $idPatient = Database::getInstance()->lastInsertId();
-            var_dump($idPatient);
-            die;
-            if ($isAddedPatient === false) {
-                Database::getInstance()->rollBack();
-                throw new Exception('Des informations manquent sur le patient.');
-            } else {
-                //    pour la partie rdv :
-                // je crée un nouveau élément de la classe Appointment:
-                $appointment = new Appointment();
-                // je lui donne les valeurs récupérées, nettoyées et validées :
-                $appointment->setDateHour($dateHour);
-                $appointment->setIdPatients($idPatient);
-                // Ajouter l'enregistrement du nouveau rdv à la base de données :
-                $isAddedAppointment = $appointment->addAppointment($idPatient);
-                if ($isAddedAppointment === false) {
-                    Database::getInstance()->rollBack();
-                    throw new Exception('Des informations manquent sur le rendez-vous.');
-                } else {
-                    //  on enregistre en bd:
-                    Database::getInstance()->commit();
-                    // si tout est bon :
-                    // message de confirmation de l'ajout du patient à la base de données :
-                    $messageOk = 'Nouveau patient et RDV enregistrés.';
+            // je récupère l'id du patient nouvellement crée dans la base de données :
+            $idPatient = $pdo->lastInsertId();
+            //    pour la partie rdv :
+            // je crée un nouveau élément de la classe Appointment:
+            $appointment = new Appointment();
+            // je lui donne les valeurs récupérées, nettoyées et validées :
+            $appointment->setDateHour($dateHour);
+            $appointment->setIdPatients($idPatient);
+            // Ajouter l'enregistrement du nouveau rdv à la base de données :
+            $isAddedAppointment = $appointment->addAppointment($idPatient);
+            if ($isAddedPatient === true && $isAddedAppointment === true) {
+                //  on enregistre en bd:
+                $pdo->commit();
+                // si tout est bon :
+                // message de confirmation de l'ajout du patient à la base de données :
+                $messageOk = 'Nouveau patient et RDV enregistrés.';
 
-                    // je réinitialise l'affichage : 
-                    $firstname = '';
-                    $lastname = '';
-                    $birthdate = '';
-                    $phone = '';
-                    $mail = '';
-                    $dateAppointment = '';
-                    $patient = '';
-                    $hour = '';
-                    $minut = '';
-                }
+                // je réinitialise l'affichage : 
+                $firstname = '';
+                $lastname = '';
+                $birthdate = '';
+                $phone = '';
+                $mail = '';
+                $dateAppointment = '';
+                $patient = '';
+                $hour = '';
+                $minut = '';
+            } else {
+                $pdo->rollBack();
+                throw new Exception('Echec de l\'enregistrement.');
             }
         }
     }

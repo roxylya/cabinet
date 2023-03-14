@@ -83,9 +83,10 @@ class Patient
 
     public function add()
     {   
+        $pdo= Database::getInstance();
         //On insère les données reçues   
         // on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = Database::getInstance()->prepare('INSERT INTO `patients`(`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES(:lastname, :firstname, :birthdate, :phone, :mail);');
+        $sth =$pdo->prepare('INSERT INTO `patients`(`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES(:lastname, :firstname, :birthdate, :phone, :mail);');
         $sth->bindValue(':lastname', $this->lastname);
         $sth->bindValue(':firstname', $this->firstname);
         $sth->bindValue(':birthdate', $this->birthdate);
@@ -104,12 +105,13 @@ class Patient
     // Afficher tous les patients.
     public static function getAll($research = "", $firstPatient = 0, $limit = 10)
     {
+        $pdo= Database::getInstance() ;
         $sql = 'SELECT * 
         FROM `patients` 
         WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` LIKE :research 
         ORDER BY `lastname`
         LIMIT :firstPatient, :limit ;';
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':research', '%' . $research . '%', PDO::PARAM_STR);
         $sth->bindValue(':firstPatient',  $firstPatient, PDO::PARAM_INT);
@@ -123,12 +125,13 @@ class Patient
     // Afficher le nombre de patients récupéré dans la recherche :
     public static function getAllCount($research = "")
     {
+        $pdo= Database::getInstance() ;
         $sql = 'SELECT * 
         FROM `patients` 
         WHERE `lastname` LIKE :research OR `firstname` LIKE :research OR `birthdate` LIKE :research OR `phone` LIKE :research OR `mail` 
         LIKE :research 
         ORDER BY `lastname`;';
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':research', '%' . $research . '%', PDO::PARAM_STR);
         $sth->execute();
@@ -142,8 +145,9 @@ class Patient
     // vérifier si le mail existe déjà dans la base de données :
     public static function existsMail(string $mail)
     {
+        $pdo= Database::getInstance() ;
         $sql = 'SELECT `id` FROM `patients` WHERE `mail` = ?;';
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         $sth->execute([$mail]);
         $results = $sth->fetchAll();
 
@@ -154,8 +158,9 @@ class Patient
     // vérifier si l'id existe dans la base de données :
     public static function existsId(int $id)
     {
+        $pdo= Database::getInstance() ;
         $sql = 'SELECT `id` FROM `patients` WHERE `id` = ?;';
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         $sth->execute([$id]);
         $results = $sth->fetchAll();
 
@@ -166,10 +171,11 @@ class Patient
 
     public static function get($id): object | bool
     {
+        $pdo= Database::getInstance() ;
         // je formule ma requête affiche tout de la table liste concernant l'id récupéré
         $sql = 'SELECT * FROM `patients` WHERE `id`=:id;';
         // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         // on exécute la requête
@@ -184,10 +190,11 @@ class Patient
 
         public static function getIdPatient($mail): object | bool
         {
+            $pdo= Database::getInstance() ;
             // je formule ma requête affiche tout de la table liste concernant le mail récupéré
             $sql = 'SELECT `id` FROM `patients` WHERE `mail`=:mail;';
             // je fais appel à la méthode prepare qui me renvoie la réponse de ma requête,je stocke la réponse dans la variable $sth qui est un pdo statement:
-            $sth = Database::getInstance()->prepare($sql);
+            $sth = $pdo->prepare($sql);
             // On affecte les valeurs au marqueur nominatif :
             $sth->bindValue(':mail', $mail);
             // on exécute la requête
@@ -203,9 +210,10 @@ class Patient
 
     public function update($id)
     {
+        $pdo= Database::getInstance() ;
         //On insère les données reçues   
         //  on note les marqueurs nominatifs exemple :birthdate sert de contenant à une valeur
-        $sth = Database::getInstance()->prepare(' UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;');
+        $sth = $pdo->prepare(' UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname, `birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id;');
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->bindValue(':lastname', $this->lastname);
         $sth->bindValue(':firstname', $this->firstname);
@@ -224,12 +232,13 @@ class Patient
 
     public static function delete($id)
     {
+        $pdo= Database::getInstance() ;
         // je mets des as pour différencier mes id des différentes tables :
         $sql = 'DELETE FROM `patients` 
           WHERE `patients`.`id`=:id ;';
 
         // on prépare la requête
-        $sth = Database::getInstance()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         // On affecte les valeurs au marqueur nominatif :
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         // on exécute la requête
